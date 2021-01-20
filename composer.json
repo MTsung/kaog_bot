@@ -1,0 +1,5 @@
+{
+    "require": {
+        "shanemcc/reactphp-discord": "^0.3.0"
+    }
+}
