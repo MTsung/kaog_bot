@@ -22,9 +22,29 @@ $discord = new MTsung\discord($token);
 
 $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
     global $discord;
-    error_log($data['content']);
+
+	$rolesId = [
+		'483324065369554976',// ☠☠☠☠包莖死人☠☠☠☠
+		'799627678700273664',// ☺☺☺☺巨屌活人☺☺☺☺
+	];
+
+    $guild_id = $data['guild_id'];// 群組 id
+    $user_id = $data['author']['id'];// user id
+    $channel_id = $data['channel_id'];// 頻道 id
+
     if(strpos($data['content'],':kaog:') !== false){
-	    $discord->setMessage($data['channel_id'], '<:sp4:501235091389939713>');
+	    $discord->setMessage($channel_id, '<:sp4:501235091389939713>');
+    }
+
+
+    if($channel_id == '800271393190051840'){
+    	//包莖
+		$discord->setRoles($guild_id, $user_id, $rolesId[0]);
+		$discord->rmRoles($guild_id, $user_id, $rolesId[1]);
+    }else if($channel_id == '800272572339322930'){
+    	//巨屌活人
+		$discord->setRoles($guild_id, $user_id, $rolesId[1]);
+		$discord->rmRoles($guild_id, $user_id, $rolesId[0]);
     }
 });
 
