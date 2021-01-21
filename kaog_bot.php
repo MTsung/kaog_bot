@@ -39,8 +39,8 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	    $discord->setMessage($channel_id, '<:sp4:501235091389939713>');
     }
 
-    if(strpos($data['content'],'我網路很差') !== false){
-	    $discord->setMessage($channel_id, '', APP_PATH.'/cronjob/kaog_bot/file/網路很差.mp3');
+    if(strpos($data['content'],'網路很差') !== false){
+	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
     }
 
     if($channel_id == '800271393190051840'){//包莖
