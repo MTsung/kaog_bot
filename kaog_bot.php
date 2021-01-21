@@ -1,12 +1,16 @@
 <?php
-
 use React\EventLoop\Factory;
 use shanemcc\discord\DiscordClient;
 
+include_once(__DIR__ ."/../../include/header.php");
+
 require __DIR__.'/vendor/autoload.php';
-require __DIR__.'/discord.class.php';
+// require __DIR__.'/discord.class.php';
 
 set_time_limit(0);
+ini_set('upload_max_filesize ', '800M');
+ini_set('post_max_size', '800M');
+ini_set('memory_limit', '-1');
 
 error_log('kaog_bot run');
 
