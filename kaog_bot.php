@@ -5,14 +5,13 @@ use shanemcc\discord\DiscordClient;
 include_once(__DIR__ ."/../../include/header.php");
 
 require __DIR__.'/vendor/autoload.php';
-// require __DIR__.'/discord.class.php';
 
 set_time_limit(0);
 ini_set('upload_max_filesize ', '800M');
 ini_set('post_max_size', '800M');
 ini_set('memory_limit', '-1');
 
-error_log('kaog_bot run');
+error_log('kaog_bot run.'.DATE);
 
 $clientID = '800231664336502804';
 $clientSecret = 'sp81y1I5zO4R2Gyq3ULvvQ1fbLVoGzJ3';
@@ -38,6 +37,10 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 
     if(strpos($data['content'],':kaog:') !== false){
 	    $discord->setMessage($channel_id, '<:sp4:501235091389939713>');
+    }
+
+    if(strpos($data['content'],'我網路很差') !== false){
+	    $discord->setMessage($channel_id, '', APP_PATH.'/cronjob/kaog_bot/file/網路很差.mp3');
     }
 
     if($channel_id == '800271393190051840'){//包莖
