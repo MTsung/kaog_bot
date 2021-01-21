@@ -36,13 +36,10 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	    $discord->setMessage($channel_id, '<:sp4:501235091389939713>');
     }
 
-
-    if($channel_id == '800271393190051840'){
-    	//包莖
+    if($channel_id == '800271393190051840'){//包莖
 		$discord->setRoles($guild_id, $user_id, $rolesId[0]);
 		$discord->rmRoles($guild_id, $user_id, $rolesId[1]);
-    }else if($channel_id == '800272572339322930'){
-    	//巨屌活人
+    }else if($channel_id == '800272572339322930'){//巨屌活人
 		$discord->setRoles($guild_id, $user_id, $rolesId[1]);
 		$discord->rmRoles($guild_id, $user_id, $rolesId[0]);
     }
