@@ -1,0 +1,39 @@
+{
+    "type": 0,
+    "tts": false,
+    "timestamp": "2021-01-20T12:51:24.838000+00:00",
+    "referenced_message": null,
+    "pinned": false,
+    "nonce": "801433702797148160",
+    "mentions": [],
+    "mention_roles": [],
+    "mention_everyone": false,
+    "member":
+    {
+        "roles": ["511115071393628200", "629115176515272716"],
+        "premium_since": "2020-11-22T04:23:49.950000+00:00",
+        "pending": false,
+        "nick": "\u6572\u5409",
+        "mute": false,
+        "joined_at": "2018-01-28T07:37:38.293000+00:00",
+        "is_pending": false,
+        "hoisted_role": "629115176515272716",
+        "deaf": false
+    },
+    "id": "801433703523024917",
+    "flags": 0,
+    "embeds": [],
+    "edited_timestamp": null,
+    "content": "<:kaog:498532064337985556>",
+    "channel_id": "787286403456827423",
+    "author":
+    {
+        "username": "MTsung",
+        "public_flags": 512,
+        "id": "327046840417517568",
+        "discriminator": "2503",
+        "avatar": "1f6d31eb252764f868b760f0b066299a"
+    },
+    "attachments": [],
+    "guild_id": "406747699841466371"
+}
