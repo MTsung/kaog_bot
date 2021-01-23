@@ -25,24 +25,27 @@ $discord = new MTsung\discord($token);
 
 $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
     global $discord;
+    $guild_id = $data['guild_id'];// 群組 id
+    $user_id = $data['author']['id'];// user id
+    $channel_id = $data['channel_id'];// 頻道 id
+	$content = $data['content'];// 內容
 
+    if(strpos($content, ':kaog:') !== false){
+	    $discord->setMessage($channel_id, '<:sp4:501235091389939713>');
+    }else if(strpos($content, '網路很差') !== false){
+	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
+    }else if(strpos($content, '酒桶教學') !== false){
+	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/酒桶教學.mp4');
+    }else if(strpos($content, '傑夫失戀') !== false){
+	    $discord->setMessage($channel_id, '請你們搞清楚 失戀亂打人是有法律層面的問題
+你找個巷子拖進去打大家都睜一隻眼閉一隻眼 但不代表你就可以你在大庭廣眾下直接開扁诶');
+    }
+
+    // 敲擊手術室
 	$rolesId = [
 		'483324065369554976',// ☠☠☠☠包莖死人☠☠☠☠
 		'799627678700273664',// ☺☺☺☺巨屌活人☺☺☺☺
 	];
-
-    $guild_id = $data['guild_id'];// 群組 id
-    $user_id = $data['author']['id'];// user id
-    $channel_id = $data['channel_id'];// 頻道 id
-
-    if(strpos($data['content'],':kaog:') !== false){
-	    $discord->setMessage($channel_id, '<:sp4:501235091389939713>');
-    }else if(strpos($data['content'],'網路很差') !== false){
-	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
-    }else if(strpos($data['content'],'酒桶教學') !== false){
-	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/酒桶教學.mp4');
-    }
-
     if($channel_id == '800271393190051840'){//包莖
 		$discord->setRoles($guild_id, $user_id, $rolesId[0]);
 		$discord->rmRoles($guild_id, $user_id, $rolesId[1]);
