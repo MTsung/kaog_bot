@@ -37,10 +37,10 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 
     if(strpos($data['content'],':kaog:') !== false){
 	    $discord->setMessage($channel_id, '<:sp4:501235091389939713>');
-    }
-
-    if(strpos($data['content'],'網路很差') !== false){
+    }else if(strpos($data['content'],'網路很差') !== false){
 	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
+    }else if(strpos($data['content'],'酒桶教學') !== false){
+	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/酒桶教學.mp4');
     }
 
     if($channel_id == '800271393190051840'){//包莖
