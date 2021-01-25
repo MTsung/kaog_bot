@@ -24,21 +24,50 @@ $client->setLoopInterface($loop);
 $discord = new MTsung\discord($token);
 
 $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
+	if ($data['author']['id'] == $client->getMyInfo()['id']){
+	    return;
+	}
     global $discord;
     $guild_id = $data['guild_id'];// 群組 id
     $user_id = $data['author']['id'];// user id
     $channel_id = $data['channel_id'];// 頻道 id
 	$content = $data['content'];// 內容
 
-    if(strpos($content, ':kaog:') !== false){
-	    $discord->setMessage($channel_id, '<:sp4:501235091389939713>');
-    }else if(strpos($content, '網路很差') !== false){
+    if($content == '!kaog'){
+        $discord->setMessage($channel_id, '
+!:kaog:
+!網路很差
+!酒桶教學
+!傑夫失戀
+!Arad');
+    }else if($content == '!:kaog:'){
+        if(rand(0,100) < 3){
+            $discord->setMessage($channel_id, '我說很清楚了
+這裡就是一個鋼琴交流群組
+拜託 不要 來我這邊
+想取得任何apex 交流以外的東西
+你知道我今天從頭到尾只是覺得你很煩而已
+我沒有說你在釣魚
+也沒有預設你的立場
+但你說的話就是會讓人感覺很討厭
+然後 對人說話拜託有點尊重
+就算我在你心裡是個白痴
+是個智障
+但拜託你
+如果你還想跟別人溝通的話
+至少先把尊重兩個字放在心上');
+        }else{
+	        $discord->setMessage($channel_id, '<:sp4:501235091389939713>');
+        }
+    }else if($content == '!網路很差'){
 	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
-    }else if(strpos($content, '酒桶教學') !== false){
+    }else if($content == '!酒桶教學'){
 	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/酒桶教學.mp4');
-    }else if(strpos($content, '傑夫失戀') !== false){
+    }else if($content == '!傑夫失戀'){
 	    $discord->setMessage($channel_id, '請你們搞清楚 失戀亂打人是有法律層面的問題
 你找個巷子拖進去打大家都睜一隻眼閉一隻眼 但不代表你就可以你在大庭廣眾下直接開扁诶');
+    }else if($content == '!Arad'){
+	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/Arad.jpg');
     }
 
     // 敲擊手術室
