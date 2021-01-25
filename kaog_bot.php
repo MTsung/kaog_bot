@@ -23,28 +23,9 @@ $client->setLoopInterface($loop);
 
 $discord = new MTsung\discord($token);
 
-$client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
-	if ($data['author']['id'] == $client->getMyInfo()['id']){
-	    return;
-	}
-    global $discord;
-    $guild_id = $data['guild_id'];// 群組 id
-    $user_id = $data['author']['id'];// user id
-    $channel_id = $data['channel_id'];// 頻道 id
-	$content = $data['content'];// 內容
-
-    if(in_array($content, ['!kaog', '!敲擊'])){
-        $discord->setMessage($channel_id, '
-!:kaog:
-!網路很差
-!酒桶教學
-!傑夫失戀
-!Arad
-!4k_dan
-!roll');
-    }else if($content == '<:kaog:498532064337985556>'){
-        if(rand(0,100) < 3){
-            $discord->setMessage($channel_id, '我說很清楚了
+$kago_text = [
+	[
+		'message' => '我說很清楚了
 這裡就是一個鋼琴交流群組
 拜託 不要 來我這邊
 想取得任何apex 交流以外的東西
@@ -57,10 +38,51 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 是個智障
 但拜託你
 如果你還想跟別人溝通的話
-至少先把尊重兩個字放在心上');
-        }else{
-	        $discord->setMessage($channel_id, '<:sp4:501235091389939713>');
-        }
+至少先把尊重兩個字放在心上',
+		'file' => null
+	],
+	[
+		'message' => '<:sp4:501235091389939713>',
+		'file' => null
+	],
+	[
+		'message' => '',
+		'file' => APP_PATH.'cronjob/kaog_bot/file/kaog_Illuminati.png'
+	],
+	[
+		'message' => 'owo',
+		'file' => null
+	],
+];
+
+
+
+$client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
+	if ($data['author']['id'] == $client->getMyInfo()['id']){
+	    return;
+	}
+
+
+    global $discord,$kago_text;
+    $guild_id = $data['guild_id'];// 群組 id
+    $user_id = $data['author']['id'];// user id
+    $channel_id = $data['channel_id'];// 頻道 id
+	$content = $data['content'];// 內容
+
+
+
+    if(in_array($content, ['!kaog', '!敲擊'])){
+        $discord->setMessage($channel_id, '
+:kaog:
+!網路很差
+!酒桶教學
+!傑夫失戀
+!Arad_is_Jakads
+!4k_dan
+!roll');
+    }else if($content == '<:kaog:498532064337985556>'){
+    	$key = rand(0, count($kago_text) - 1);
+        $discord->setMessage($channel_id, $kago_text[$key]['message'], $kago_text[$key]['file']);
     }else if($content == '!4k_dan'){
 	    $discord->setMessage($channel_id, 'https://sites.google.com/view/danreform/home');
     }else if($content == '!roll'){
@@ -72,9 +94,16 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
     }else if($content == '!傑夫失戀'){
 	    $discord->setMessage($channel_id, '請你們搞清楚 失戀亂打人是有法律層面的問題
 你找個巷子拖進去打大家都睜一隻眼閉一隻眼 但不代表你就可以你在大庭廣眾下直接開扁诶');
-    }else if($content == '!Arad'){
+    }else if($content == '!Arad_is_Jakads'){
 	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/Arad.jpg');
+    }else if($content == '!!exit'){
+	    $discord->setMessage($channel_id, 'bye');
+		error_log('kaog_bot bye.');
+	    exit;
     }
+
+
+
 
     // 敲擊手術室
 	$rolesId = [
