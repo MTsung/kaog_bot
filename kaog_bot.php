@@ -33,7 +33,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
     $channel_id = $data['channel_id'];// 頻道 id
 	$content = $data['content'];// 內容
 
-    if($content == '!kaog'){
+    if(in_array($content, ['!kaog', '!敲擊']){
         $discord->setMessage($channel_id, '
 !:kaog:
 !網路很差
