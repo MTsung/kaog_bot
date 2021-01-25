@@ -33,7 +33,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
     $channel_id = $data['channel_id'];// 頻道 id
 	$content = $data['content'];// 內容
 
-    if(in_array($content, ['!kaog', '!敲擊']){
+    if(in_array($content, ['!kaog', '!敲擊'])){
         $discord->setMessage($channel_id, '
 !:kaog:
 !網路很差
@@ -59,6 +59,10 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
         }else{
 	        $discord->setMessage($channel_id, '<:sp4:501235091389939713>');
         }
+    }else if($content == '!4k_dan'){
+	    $discord->setMessage($channel_id, 'https://sites.google.com/view/danreform/home');
+    }else if($content == '!roll'){
+	    $discord->setMessage($channel_id, rand(0,100));
     }else if($content == '!網路很差'){
 	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
     }else if($content == '!酒桶教學'){
