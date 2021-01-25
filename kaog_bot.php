@@ -40,7 +40,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 !酒桶教學
 !傑夫失戀
 !Arad');
-    }else if($content == ':kaog:'){
+    }else if($content == '<:kaog:498532064337985556>'){
         if(rand(0,100) < 3){
             $discord->setMessage($channel_id, '我說很清楚了
 這裡就是一個鋼琴交流群組
