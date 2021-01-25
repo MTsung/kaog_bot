@@ -70,41 +70,49 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	$content = $data['content'];// 內容
 
 
-
-    if(in_array($content, ['!kaog', '!敲擊'])){
-        $discord->setMessage($channel_id, '
-:kaog:
-!網路很差
-!酒桶教學
-!傑夫失戀
-!Arad_is_Jakads
-!4k_dan
-!roll');
-    }else if($content == '<:kaog:498532064337985556>'){
-    	$key = rand(0, count($kago_text) - 1);
-        $discord->setMessage($channel_id, $kago_text[$key]['message'], $kago_text[$key]['file']);
-    }else if($content == '!4k_dan'){
-	    $discord->setMessage($channel_id, 'https://sites.google.com/view/danreform/home');
-    }else if($content == '!roll'){
-	    $discord->setMessage($channel_id, rand(0,100));
-    }else if($content == '!網路很差'){
-	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
-    }else if($content == '!酒桶教學'){
-	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/酒桶教學.mp4');
-    }else if($content == '!傑夫失戀'){
-	    $discord->setMessage($channel_id, '請你們搞清楚 失戀亂打人是有法律層面的問題
+	switch ($content) {
+		case '!kaog':
+		case '!敲擊':
+	        $discord->setMessage($channel_id, '
+> **:kaog:
+> !網路很差
+> !酒桶教學
+> !傑夫失戀
+> !Arad_is_Jakads
+> !4k_dan
+> !roll**');
+			break;
+		case '<:kaog:498532064337985556>':
+	    	$key = rand(0, count($kago_text) - 1);
+	        $discord->setMessage($channel_id, $kago_text[$key]['message'], $kago_text[$key]['file']);
+			break;
+		case '!4k_dan':
+	    	$discord->setMessage($channel_id, 'https://sites.google.com/view/danreform/home');
+			break;
+		case '!roll':
+	    	$discord->setMessage($channel_id, rand(0,100));
+			break;
+		case '!網路很差':
+	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
+			break;
+		case '!酒桶教學':
+	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/酒桶教學.mp4');
+			break;
+		case '!傑夫失戀':
+	    	$discord->setMessage($channel_id, '請你們搞清楚 失戀亂打人是有法律層面的問題
 你找個巷子拖進去打大家都睜一隻眼閉一隻眼 但不代表你就可以你在大庭廣眾下直接開扁诶');
-    }else if($content == '!Arad_is_Jakads'){
-	    $discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/Arad.jpg');
-    }else if($content == '!!exit'){
-	    $discord->setMessage($channel_id, 'bye');
-		error_log('kaog_bot bye.');
-	    exit;
-    }
+			break;
+		case '!Arad_is_Jakads':
+	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/Arad.jpg');
+			break;
+		case '!!exit':
+		    $discord->setMessage($channel_id, 'bye');
+			error_log('kaog_bot bye.');
+		    exit;
+			break;
+	}
 
-
-
-
+	
     // 敲擊手術室
 	$rolesId = [
 		'483324065369554976',// ☠☠☠☠包莖死人☠☠☠☠
