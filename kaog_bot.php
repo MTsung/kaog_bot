@@ -39,7 +39,9 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 !網路很差
 !酒桶教學
 !傑夫失戀
-!Arad');
+!Arad
+!4k_dan
+!roll');
     }else if($content == '<:kaog:498532064337985556>'){
         if(rand(0,100) < 3){
             $discord->setMessage($channel_id, '我說很清楚了
