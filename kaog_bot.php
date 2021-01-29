@@ -3,8 +3,10 @@ use React\EventLoop\Factory;
 use shanemcc\discord\DiscordClient;
 
 include_once(__DIR__ ."/../../include/header.php");
+define('CACHE_PATH',APP_PATH."cache/123/");
 
 require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/kaog.class.php';
 
 set_time_limit(0);
 ini_set('upload_max_filesize ', '800M');
@@ -22,6 +24,7 @@ $loop = Factory::create();
 $client->setLoopInterface($loop);
 
 $discord = new MTsung\discord($token);
+$kaog = new MTsung\kaog($console,'bot_kaog','');
 
 $kago_text = [
 	[
@@ -63,31 +66,33 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	}
 
 
-    global $discord,$kago_text,$console,$time;
+    global $discord,$kago_text,$console,$time,$kaog;
     $guild_id = $data['guild_id'];// 群組 id
     $user_id = $data['author']['id'];// user id
+    $username = $data['author']['username'];// username
     $channel_id = $data['channel_id'];// 頻道 id
 	$content = $data['content'];// 內容
 	$nick = $data['member']['nick'];
 
 	// 紀錄訊息次數
 	$guild_user = $guild_id.'_'.$user_id;
-	if(!isset($time[$guild_user]) || $time[$guild_user] - time() >= 10){
-		$kaog = new MTsung\dataList($console,'bot_kaog','');
+	if(!isset($time[$guild_user]) || (time() - $time[$guild_user] >= 10)){
 		$input = [
 			'guild_id' => $guild_id,
 			'user_id' => $user_id,
-			'member_nick' => $nick,
-		]
+			'member_nick' => $nick ?: $username,
+			'count' => 1,
+		];
 		if($temp = $kaog->getData('where guild_id=? and user_id=?',[$guild_id, $user_id])){
 			$input['id'] = $temp[0]['id'];
-			$input['count'] = $temp[0]['count'];
+			$input['count'] = $temp[0]['count'] + 1;
 		}
+		// error_log(json_encode($input));
 		$kaog->setData($input);
 	}
 	$time[$guild_user] = time();
 	foreach ($time as $key => $value) {
-		if($value - time() >= 10){
+		if(time() - $value >= 10){
 			unset($time[$key]);
 		}
 	}
@@ -128,10 +133,12 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 		case '!Arad_is_Jakads':
 	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/Arad.jpg');
 			break;
-		case '!!exit':
-		    $discord->setMessage($channel_id, 'bye');
-			error_log('kaog_bot bye.');
-		    exit;
+		case '!exit':
+			if($user_id == '327046840417517568'){
+			    $discord->setMessage($channel_id, 'bye');
+				error_log('kaog_bot bye.');
+			    exit;
+			}
 			break;
 	}
 
