@@ -24,7 +24,6 @@ $loop = Factory::create();
 $client->setLoopInterface($loop);
 
 $discord = new MTsung\discord($token);
-$kaog = new MTsung\kaog($console,'bot_kaog','');
 
 $kago_text = [
 	[
@@ -63,16 +62,33 @@ $time = [];
 $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
 	if ($data['author']['id'] == $client->getMyInfo()['id']){
 	    return;
+	}	
+
+    global $discord,$kago_text,$console,$time;
+    
+    // sql 連線閒置太久會消失 要重 new 
+    if(!$console->conn->Execute('SHOW TABLES;')){
+		$console->conn = ADONewConnection("pdo");
+		$console->conn->connect('mysql:host='.MTsung\config::DB_HOST.';dbname='.MTsung\config::DB_NAME.';charset=utf8mb4',MTsung\config::DB_USER,MTsung\config::DB_PASSWORD);
+		$console->conn->Execute("SET sql_mode = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';");
+		$console->conn->Execute("SET NAMES utf8mb4;");
+		$console->conn->Execute("SET CHARACTER_SET_CLIENT=utf8mb4;");
+		$console->conn->Execute("SET CHARACTER_SET_RESULTS=utf8mb4;");
+		$console->conn->Execute("SET CHARACTER_SET_CONNECTION=utf8mb4;");
+		$console->conn->Execute("SET GLOBAL time_zone = '".MTsung\config::TIME_ZONE."';");
+		$console->conn->Execute("SET time_zone = '".MTsung\config::TIME_ZONE."';");
+		$console->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	}
+	
+	$kaog = new MTsung\kaog($console,'bot_kaog','');
 
-
-    global $discord,$kago_text,$console,$time,$kaog;
     $guild_id = $data['guild_id'];// 群組 id
     $user_id = $data['author']['id'];// user id
     $username = $data['author']['username'];// username
     $channel_id = $data['channel_id'];// 頻道 id
 	$content = $data['content'];// 內容
 	$nick = $data['member']['nick'];
+
 
 	// 紀錄訊息次數
 	$guild_user = $guild_id.'_'.$user_id;
@@ -87,7 +103,6 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 			$input['id'] = $temp[0]['id'];
 			$input['count'] = $temp[0]['count'] + 1;
 		}
-		// error_log(json_encode($input));
 		$kaog->setData($input);
 	}
 	$time[$guild_user] = time();
