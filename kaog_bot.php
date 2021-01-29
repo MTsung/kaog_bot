@@ -56,19 +56,42 @@ $kago_text = [
 ];
 
 
-
+$time = [];
 $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
 	if ($data['author']['id'] == $client->getMyInfo()['id']){
 	    return;
 	}
 
 
-    global $discord,$kago_text;
+    global $discord,$kago_text,$console,$time;
     $guild_id = $data['guild_id'];// 群組 id
     $user_id = $data['author']['id'];// user id
     $channel_id = $data['channel_id'];// 頻道 id
 	$content = $data['content'];// 內容
+	$nick = $data['member']['nick'];
 
+	// 紀錄訊息次數
+	$guild_user = $guild_id.'_'.$user_id;
+	if(!isset($time[$guild_user]) || $time[$guild_user] - time() >= 10){
+		$kaog = new MTsung\dataList($console,'bot_kaog','');
+		$input = [
+			'guild_id' => $guild_id,
+			'user_id' => $user_id,
+			'member_nick' => $nick,
+		]
+		if($temp = $kaog->getData('where guild_id=? and user_id=?',[$guild_id, $user_id])){
+			$input['id'] = $temp[0]['id'];
+			$input['count'] = $temp[0]['count'];
+		}
+		$kaog->setData($input);
+	}
+	$time[$guild_user] = time();
+	foreach ($time as $key => $value) {
+		if($value - time() >= 10){
+			unset($time[$key]);
+		}
+	}
+	// 紀錄訊息次數
 
 	switch ($content) {
 		case '!kaog':
