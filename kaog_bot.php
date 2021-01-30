@@ -98,8 +98,10 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 			'user_id' => $user_id,
 			'member_nick' => $nick ?: $username,
 			'count' => 1,
+			'year' => date('y'),
+			'month' => date('n'),
 		];
-		if($temp = $kaog->getData('where guild_id=? and user_id=?',[$guild_id, $user_id])){
+		if($temp = $kaog->getData('where guild_id=? and user_id=? and year=? and month=?',[$guild_id, $user_id, date('y'), date('n')])){
 			$input['id'] = $temp[0]['id'];
 			$input['count'] = $temp[0]['count'] + 1;
 		}
