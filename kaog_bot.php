@@ -104,8 +104,8 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 			$input['count'] = $temp[0]['count'] + 1;
 		}
 		$kaog->setData($input);
+		$time[$guild_user] = time();
 	}
-	$time[$guild_user] = time();
 	foreach ($time as $key => $value) {
 		if(time() - $value >= 10){
 			unset($time[$key]);
