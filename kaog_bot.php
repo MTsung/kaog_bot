@@ -59,12 +59,13 @@ $kago_text = [
 
 
 $time = [];
+$count = [];
 $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
 	if ($data['author']['id'] == $client->getMyInfo()['id']){
 	    return;
 	}	
 
-    global $discord,$kago_text,$console,$time;
+    global $discord, $kago_text, $console, $time, $count;
     
     // sql 連線閒置太久會消失 要重 new 
     if(!$console->conn->Execute('SHOW TABLES;')){
@@ -88,6 +89,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
     $channel_id = $data['channel_id'];// 頻道 id
 	$content = $data['content'];// 內容
 	$nick = $data['member']['nick'];
+
 
 
 	// 紀錄訊息次數
@@ -115,6 +117,9 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	}
 	// 紀錄訊息次數
 
+
+
+	//指令
 	switch ($content) {
 		case '!kaog':
 		case '!敲擊':
@@ -139,9 +144,9 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 			$rand = rand(0,100);
 	    	$discord->setMessage($channel_id, $rand);
 	    	if($rand == 0){
-	    		$discord->setMessage($channel_id, '恭喜你獲得一隻傑夫醬', APP_PATH.'cronjob/kaog_bot/file/jeff_chan.jpg');
+	    		$discord->setMessage($channel_id, '恭喜 <@'.$user_id.'> 獲得一隻傑夫醬', APP_PATH.'cronjob/kaog_bot/file/jeff_chan.jpg');
 	    	}else if($rand == 100){
-	    		$discord->setMessage($channel_id, '恭喜你獲得一隻敲擊', APP_PATH.'cronjob/kaog_bot/file/kaog.png');
+	    		$discord->setMessage($channel_id, '恭喜 <@'.$user_id.'> 獲得一隻敲擊', APP_PATH.'cronjob/kaog_bot/file/kaog.png');
 	    	}
 			break;
 		case '!網路很差':
@@ -169,8 +174,11 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	    	$discord->setMessage($channel_id, ':question:');
 			break;
 	}
+	//指令
 
-	
+
+
+
     // 敲擊手術室
 	$rolesId = [
 		'483324065369554976',// ☠☠☠☠包莖死人☠☠☠☠
