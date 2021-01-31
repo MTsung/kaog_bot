@@ -123,6 +123,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 > !網路很差
 > !酒桶教學
 > !傑夫失戀
+> !傑夫醬
 > !Arad_is_Jakads
 > !4k_dan
 > !roll**');
@@ -135,7 +136,13 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	    	$discord->setMessage($channel_id, 'https://sites.google.com/view/danreform/home');
 			break;
 		case '!roll':
-	    	$discord->setMessage($channel_id, rand(0,100));
+			$rand = rand(0,100);
+	    	$discord->setMessage($channel_id, $rand);
+	    	if($rand == 0){
+	    		$discord->setMessage($channel_id, '恭喜你獲得一隻傑夫醬', APP_PATH.'cronjob/kaog_bot/file/jeff_chan.jpg');
+	    	}else if($rand == 100){
+	    		$discord->setMessage($channel_id, '恭喜你獲得一隻敲擊', APP_PATH.'cronjob/kaog_bot/file/kaog.png');
+	    	}
 			break;
 		case '!網路很差':
 	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
@@ -147,6 +154,9 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	    	$discord->setMessage($channel_id, '請你們搞清楚 失戀亂打人是有法律層面的問題
 你找個巷子拖進去打大家都睜一隻眼閉一隻眼 但不代表你就可以你在大庭廣眾下直接開扁诶');
 			break;
+		case '!傑夫醬':
+	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/jeff_chan.jpg');
+			break;
 		case '!Arad_is_Jakads':
 	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/Arad.jpg');
 			break;
@@ -156,6 +166,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 				error_log('kaog_bot bye.');
 			    exit;
 			}
+	    	$discord->setMessage($channel_id, ':question:');
 			break;
 	}
 
