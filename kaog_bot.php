@@ -130,6 +130,9 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 > !傑夫失戀
 > !傑夫醬
 > !Arad_is_Jakads
+> !c哥
+> !特哥 // Todo
+> !貓樂 // Todo
 > !4k_dan
 > !roll**');
 			break;
@@ -164,6 +167,12 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 			break;
 		case '!Arad_is_Jakads':
 	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/Arad.jpg');
+			break;
+		case '!c哥':
+	    	$discord->setMessage($channel_id, '人品是一切之先行
+沒有人品 不用討論
+連話語權 出席權都沒有
+沒有意義');
 			break;
 		case '!exit':
 			if($user_id == '327046840417517568'){
