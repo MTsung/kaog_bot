@@ -70,13 +70,14 @@ $sleep_text = [
 
 
 $time = [];
+$time_roll = [];
 $count = [];
 $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
 	if ($data['author']['id'] == $client->getMyInfo()['id']){
 	    return;
 	}	
 
-    global $discord, $kago_text, $sleep_text, $console, $time, $count;
+    global $discord, $kago_text, $sleep_text, $console, $time, $count, $time_roll;
     
     // sql 連線閒置太久會消失 要重 new 
     if(!$console->conn->Execute('SHOW TABLES;')){
@@ -156,13 +157,17 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	    	$discord->setMessage($channel_id, 'https://sites.google.com/view/danreform/home');
 			break;
 		case '!roll':
-			$rand = rand(0,100);
-	    	$discord->setMessage($channel_id, $rand);
-	    	if($rand == 0){
-	    		$discord->setMessage($channel_id, '恭喜 <@'.$user_id.'> 獲得一隻傑夫醬', APP_PATH.'cronjob/kaog_bot/file/jeff_chan.jpg');
-	    	}else if($rand == 100){
-	    		$discord->setMessage($channel_id, '恭喜 <@'.$user_id.'> 獲得一隻敲擊', APP_PATH.'cronjob/kaog_bot/file/kaog.png');
-	    	}
+			if(!isset($time_roll[$guild_user]) || (time() - $time_roll[$guild_user] >= 10)){
+				$time_roll[$guild_user] = time();
+				
+				$rand = rand(0,100);
+		    	$discord->setMessage($channel_id, $rand);
+		    	if($rand == 0){
+		    		$discord->setMessage($channel_id, '恭喜 <@'.$user_id.'> 獲得一隻傑夫醬', APP_PATH.'cronjob/kaog_bot/file/jeff_chan.jpg');
+		    	}else if($rand == 100){
+		    		$discord->setMessage($channel_id, '恭喜 <@'.$user_id.'> 獲得一隻敲擊', APP_PATH.'cronjob/kaog_bot/file/kaog.png');
+		    	}
+			}
 			break;
 		case '!網路很差':
 	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
