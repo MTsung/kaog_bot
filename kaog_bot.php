@@ -57,6 +57,17 @@ $kago_text = [
 	],
 ];
 
+$sleep_text = [
+	[
+		'message' => '',
+		'file' => APP_PATH.'cronjob/kaog_bot/file/jeff_sleep.png'
+	],
+	[
+		'message' => '',
+		'file' => APP_PATH.'cronjob/kaog_bot/file/www_sleep.png'
+	],
+];
+
 
 $time = [];
 $count = [];
@@ -65,7 +76,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	    return;
 	}	
 
-    global $discord, $kago_text, $console, $time, $count;
+    global $discord, $kago_text, $sleep_text, $console, $time, $count;
     
     // sql 連線閒置太久會消失 要重 new 
     if(!$console->conn->Execute('SHOW TABLES;')){
@@ -131,8 +142,9 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 > !傑夫醬
 > !Arad_is_Jakads
 > !c哥
-> !特哥 // Todo
-> !貓樂 // Todo
+> !特哥
+> !水沙蓮
+> !睡覺
 > !4k_dan
 > !roll**');
 			break;
@@ -173,6 +185,17 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 沒有人品 不用討論
 連話語權 出席權都沒有
 沒有意義');
+			break;
+		case '!特哥':
+	    	$discord->setMessage($channel_id, '雷中之雷 貫中貫己 
+姆中網中 清口聽聽', APP_PATH.'cronjob/kaog_bot/file/ter.png');
+			break;
+		case '!水沙蓮':
+	    	$discord->setMessage($channel_id, 'https://youtu.be/S9lVCA2xv40');
+			break;
+		case '!睡覺':
+	    	$key = rand(0, count($sleep_text) - 1);
+	    	$discord->setMessage($channel_id, $sleep_text[$key]['message'], $sleep_text[$key]['file']);
 			break;
 		case '!exit':
 			if($user_id == '327046840417517568'){
