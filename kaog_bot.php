@@ -129,7 +129,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	}
 	// 紀錄訊息次數
 
-
+	$content = explode(" ", $content)[0];
 
 	//指令
 	switch ($content) {
