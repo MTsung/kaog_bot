@@ -379,6 +379,10 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	    	$key = rand(0, count($sleep_text) - 1);
 	    	$discord->setMessage($channel_id, $sleep_text[$key]['message'], $sleep_text[$key]['file']);
 			break;
+		case '!ななひら':
+		case '!nanahira':
+	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/nanahira.mp3');
+			break;
 		case '!exit':
 			if($user_id == '327046840417517568'){
 			    $discord->setMessage($channel_id, 'bye');
