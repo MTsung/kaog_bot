@@ -268,6 +268,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	
 	$kaog = new MTsung\kaog($console,'bot_kaog','');
 	$cococola = new MTsung\dataList($console,'cococola','');
+	$discord_user = new MTsung\dataList($console,'discord_user','');
 
     $guild_id = $data['guild_id'];// 群組 id
     $user_id = $data['author']['id'];// user id
@@ -276,6 +277,20 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	$content = $data['content'];// 內容
 	$nick = $data['member']['nick'];
 
+	// kaog_coin
+	$input = [
+		'user_id' => $user_id,
+		'member_nick' => $nick ?: $username,
+	];
+	if($temp = $discord_user->getData('where user_id=?',[$user_id])){
+		if(($temp[0]['last_ts'] ?? 0) + 3600 * 12 < time()){
+			$input['last_ts'] = time();
+			$input['kaog_coin'] = ($temp[0]['kaog_coin'] ?? 0) + 1;
+		}
+		$input['id'] = $temp[0]['id'];
+	}
+	$discord_user->setData($input);
+	// kaog_coin
 
 
 	// 紀錄訊息次數
