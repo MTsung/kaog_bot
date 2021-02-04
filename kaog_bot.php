@@ -366,7 +366,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 			break;
 		case '!c哥語錄總集篇':
 	    	$text = $cococola->getData('ORDER BY RAND() LIMIT 1');
-	        $discord->setMessage($channel_id, $text[0]['content']);
+	        $discord->setMessage($channel_id, htmlspecialchars_decode($text[0]['content'], ENT_QUOTES));
 			break;
 		case '!特哥':
 	    	$discord->setMessage($channel_id, '雷中之雷 貫中貫己 
