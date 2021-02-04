@@ -282,12 +282,14 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 		'user_id' => $user_id,
 		'member_nick' => $nick ?: $username,
 	];
+	$kaog_coin_count = 1;
 	if($temp = $discord_user->getData('where user_id=?',[$user_id])){
-		if(($temp[0]['last_ts'] ?? 0) + 3600 * 12 < time()){
+		if((int)($temp[0]['last_ts'] ?? 0) + 3600 * 12 < time()){
 			$input['last_ts'] = time();
-			$input['kaog_coin'] = ($temp[0]['kaog_coin'] ?? 0) + 1;
+			$input['kaog_coin'] = (int)($temp[0]['kaog_coin'] ?? 0) + 3;
 		}
 		$input['id'] = $temp[0]['id'];
+		$kaog_coin_count = $input['kaog_coin'] ?: (int)$temp[0]['kaog_coin'];
 	}
 	$discord_user->setData($input);
 	// kaog_coin
@@ -318,10 +320,10 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	}
 	// 紀錄訊息次數
 
-	$content = explode(" ", $content)[0];
+	$content = explode(" ", $content);
 
 	//指令
-	switch ($content) {
+	switch ($content[0]) {
 		case '!kaog':
 		case '!敲擊':
 	        $discord->setMessage($channel_id, '
@@ -337,7 +339,11 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 > !水沙蓮
 > !睡覺
 > !4k_dan
-> !roll**');
+> !roll
+> !kaog_coin
+> !bet <數量>
+> !top
+> !bottom**');
 			break;
 		case '<:kaog:498532064337985556>':
 	    	$key = rand(0, count($kago_text) - 1);
@@ -357,6 +363,62 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 		    	}else if($rand == 100){
 		    		$discord->setMessage($channel_id, '恭喜 <@'.$user_id.'> 獲得一隻敲擊', APP_PATH.'cronjob/kaog_bot/file/kaog.png');
 		    	}
+			}
+			break;
+		case '!top':
+			$top = $discord_user->getData('order by kaog_coin desc limit 15');
+			$message = '敲擊幣富豪榜
+';
+			foreach ($top as $key => $value) {
+				$message .= '> '.($key + 1).'. '.$value['member_nick'].' 有 '.$value['kaog_coin'].' 顆敲擊幣
+';
+			}
+		    $discord->setMessage($channel_id, $message);
+			break;
+		case '!bottom':
+			$top = $discord_user->getData('order by kaog_coin asc limit 15');
+			$message = '敲擊幣窮鬼榜
+';
+			foreach ($top as $key => $value) {
+				$message .= '> '.($key + 1).'. '.$value['member_nick'].' 有 '.$value['kaog_coin'].' 顆敲擊幣
+';
+			}
+		    $discord->setMessage($channel_id, $message);
+			break;
+		case '!kaog_coin':
+		    $discord->setMessage($channel_id, '<@'.$user_id.'> 你有 '.$kaog_coin_count.' 顆敲擊幣 <:sp4:501235091389939713>');
+			break;
+		case '!bet':
+			if(!isset($time_roll[$guild_user]) || (time() - $time_roll[$guild_user] >= 10)){
+				$time_roll[$guild_user] = time();
+				
+				if(!is_numeric($content[1])){
+					break;
+				}
+				if($content[1] < 1){
+					break;
+				}
+				if($kaog_coin_count < $content[1]){
+		    		$discord->setMessage($channel_id, '<@'.$user_id.'> 你的敲擊幣不夠 <:sp4:501235091389939713>');
+					break;
+				}
+				$temp = $discord_user->getData('where user_id=?',[$user_id])[0];
+				$rand = rand(0,100);
+				$move = 0;
+		    	if($rand > 50){
+		    		$discord->setMessage($channel_id, '<@'.$user_id.'> 獲得了 '.$content[1].' 顆敲擊幣 <:kaog:498532064337985556>');
+		    		$move = $content[1];
+		    	}else if($rand < 50){
+		    		$discord->setMessage($channel_id, '<@'.$user_id.'> 損失了 '.$content[1].' 顆敲擊幣');
+		    		$move = $content[1] * -1;
+		    	}else{
+		    		$discord->setMessage($channel_id, '幹 <@'.$user_id.'> 獲得了 '.($content[1] * 50).' 顆敲擊幣 <:sp4:501235091389939713> <:sp4:501235091389939713>');
+		    		$move = $content[1] * 50;
+		    	}
+		    	$discord_user->setData([
+		    		'id' => $temp['id'],
+		    		'kaog_coin' => $temp['kaog_coin'] + $move,
+		    	]);
 			}
 			break;
 		case '!網路很差':
