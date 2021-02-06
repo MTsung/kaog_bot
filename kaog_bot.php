@@ -279,22 +279,20 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	$nick = $data['member']['nick'];
 
 	// kaog_coin
-	if(!in_array($user_id, ['376342800377184256'])){
-		$input = [
-			'user_id' => $user_id,
-			'member_nick' => $nick ?: $username,
-		];
-		$kaog_coin_count = 1;
-		if($temp = $discord_user->getData('where user_id=?',[$user_id])){
-			if((int)($temp[0]['last_ts'] ?? 0) + 1800 < time()){
-				$input['last_ts'] = time();
-				$input['kaog_coin'] = bcadd(($temp[0]['kaog_coin'] ?? 0), 10);
-			}
-			$input['id'] = $temp[0]['id'];
-			$kaog_coin_count = $input['kaog_coin'] ?: $temp[0]['kaog_coin'];
+	$input = [
+		'user_id' => $user_id,
+		'member_nick' => $nick ?: $username,
+	];
+	$kaog_coin_count = 1;
+	if($temp = $discord_user->getData('where user_id=?',[$user_id])){
+		if(((int)($temp[0]['last_ts'] ?? 0) + 1800 < time()) && !in_array($user_id, ['376342800377184256'])){
+			$input['last_ts'] = time();
+			$input['kaog_coin'] = bcadd(($temp[0]['kaog_coin'] ?? 0), 10);
 		}
-		$discord_user->setData($input);
+		$input['id'] = $temp[0]['id'];
+		$kaog_coin_count = $input['kaog_coin'] ?: $temp[0]['kaog_coin'];
 	}
+	$discord_user->setData($input);
 	// kaog_coin
 
 
