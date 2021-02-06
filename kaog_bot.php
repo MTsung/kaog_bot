@@ -401,7 +401,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 					break;
 				}
 				if($kaog_coin_count < $content[1]){
-		    		$discord->setMessage($channel_id, '<@'.$user_id.'> 你的敲擊幣不夠 <:sp4:501235091389939713> 立即點擊連結儲值敲擊幣! https://mania.mtsung.com/support');
+		    		$discord->setMessage($channel_id, '<@'.$user_id.'> 你的敲擊幣不夠 <:sp4:501235091389939713> 立即點擊連結儲值敲擊幣! https://a.mtsung.com/_/support');
 					break;
 				}
 				$temp = $discord_user->getData('where user_id=?',[$user_id])[0];
