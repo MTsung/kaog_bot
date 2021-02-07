@@ -506,5 +506,9 @@ $loop->run();
 
 
 function number_format_string($number, $delimeter = ','){
+	$number = explode('.', $number)[0];
+	if(strpos($number, '-') !== false){
+    	return "0";
+	}
     return strrev(implode($delimeter, str_split(strrev($number), 3)));
 }
