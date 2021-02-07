@@ -510,5 +510,12 @@ function number_format_string($number, $delimeter = ','){
 	if(strpos($number, '-') !== false){
     	return "0";
 	}
-    return strrev(implode($delimeter, str_split(strrev($number), 3)));
+	for($i = $sub_i = 0; $i < strlen($number); $i++) {
+		if($number[$i]){
+			break;
+		}
+		$sub_i++;
+	}
+	$number = substr($number, $sub_i);
+    return strrev(implode($delimeter, str_split(strrev($number), 3))) ?: 0;
 }
