@@ -283,7 +283,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 		'user_id' => $user_id,
 		'member_nick' => $nick ?: $username,
 	];
-	$kaog_coin_count = 1;
+	$kaog_coin_count = 5;
 	if($temp = $discord_user->getData('where user_id=?',[$user_id])){
 		if(((int)($temp[0]['last_ts'] ?? 0) + 1800 < time()) && !in_array($user_id, ['376342800377184256'])){
 			$input['last_ts'] = time();
@@ -291,6 +291,9 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 		}
 		$input['id'] = $temp[0]['id'];
 		$kaog_coin_count = $input['kaog_coin'] ?: $temp[0]['kaog_coin'];
+	}
+	if($kaog_coin_count <= 0){
+		$kaog_coin_count = $input['kaog_coin'] = 5;
 	}
 	$discord_user->setData($input);
 	// kaog_coin
@@ -391,7 +394,11 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 		    $discord->setMessage($channel_id, '<@'.$user_id.'> 你有 '.number_format_string($kaog_coin_count).' 顆敲擊幣 <:sp4:501235091389939713>');
 			break;
 		case '!bet':
-			if(!isset($time_roll[$guild_user]) || (time() - $time_roll[$guild_user] >= 5)){
+// 			if($user_id != '327046840417517568'){
+// 			    $discord->setMessage($channel_id, '敲擊累了');
+// 				break;
+// 			}
+			if(!isset($time_roll[$guild_user]) || (time() - $time_roll[$guild_user] >= 3)){
 				$time_roll[$guild_user] = time();
 				
 				if(!is_numeric($content[1])){
@@ -405,21 +412,25 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 					break;
 				}
 				$temp = $discord_user->getData('where user_id=?',[$user_id])[0];
-				$rand = rand(0,100);
+				$rand = rand(0,99);
 				$move = 0;
 		    	if($rand > 50){
 		    		$move = $content[1];
 		    		$discord->setMessage($channel_id, '<@'.$user_id.'> 獲得了 '.number_format_string($content[1]).' 顆敲擊幣，還剩下 '.number_format_string(bcadd($temp['kaog_coin'], $move)).' 顆 <:kaog:498532064337985556>');
-		    	}else if($rand < 50){
+		    	}else if($rand < 49){
 		    		$move = bcmul($content[1], -1);
 		    		$discord->setMessage($channel_id, '<@'.$user_id.'> 損失了 '.number_format_string($content[1]).' 顆敲擊幣，還剩下 '.number_format_string(bcadd($temp['kaog_coin'], $move)).' 顆');
-		    	}else{
-		    		$move = bcmul($content[1], 50);
-		    		$discord->setMessage($channel_id, '幹 <@'.$user_id.'> 獲得了 '.number_format_string(bcmul($content[1], 50)).' 顆敲擊幣，還剩下 '.number_format_string(bcadd($temp['kaog_coin'], $move)).' 顆 <:sp4:501235091389939713> <:sp4:501235091389939713>');
+		    	}else if($rand == 49){
+		    		$move = bcmul($content[1], -5);
+		    		$discord->setMessage($channel_id, '哭阿 <@'.$user_id.'> 損失了 '.number_format_string(bcmul($content[1], 5)).' 顆敲擊幣，還剩下 '.number_format_string(bcadd($temp['kaog_coin'], $move)).' 顆 <:sp4:501235091389939713> <:sp4:501235091389939713>');
+		    	}else if($rand == 50){
+		    		$move = bcmul($content[1], 20);
+		    		$discord->setMessage($channel_id, '幹 <@'.$user_id.'> 獲得了 '.number_format_string(bcmul($content[1], 20)).' 顆敲擊幣，還剩下 '.number_format_string(bcadd($temp['kaog_coin'], $move)).' 顆 <:sp4:501235091389939713> <:sp4:501235091389939713>');
 		    	}
+		    	$___ = bcadd($temp['kaog_coin'], $move);
 		    	$discord_user->setData([
 		    		'id' => $temp['id'],
-		    		'kaog_coin' => bcadd($temp['kaog_coin'], $move),
+		    		'kaog_coin' => ((strpos($___,'-') !== false) ? 0 : $___),
 		    	]);
 			}
 			break;
