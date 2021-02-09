@@ -245,13 +245,16 @@ $sleep_text = [
 $time = [];
 $time_roll = [];
 $count = [];
+$time_bet = [];
+$aaaaaaa_count = 0;
+$aaaaaaa_number = rand(300,1000);
 $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
 	if ($data['author']['id'] == $client->getMyInfo()['id']){
 	    return;
 	}
     // error_log('kaog_bot memory_get_usage: '.memory_get_usage().'/'.memory_get_usage(true));
 
-    global $discord, $kago_text, $sleep_text, $c_text, $console, $time, $count, $time_roll;
+    global $discord, $kago_text, $sleep_text, $c_text, $console, $time, $count, $time_roll,$aaaaaaa_count,$aaaaaaa_number;
     
     // sql 連線閒置太久會消失 要重 new 
     if(!$console->conn->Execute('SHOW TABLES;')){
@@ -283,7 +286,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 		'user_id' => $user_id,
 		'member_nick' => $nick ?: $username,
 	];
-	$kaog_coin_count = 5;
+	$kaog_coin_count = 50;
 	if($temp = $discord_user->getData('where user_id=?',[$user_id])){
 		if(((int)($temp[0]['last_ts'] ?? 0) + 1800 < time()) && !in_array($user_id, ['376342800377184256'])){
 			$input['last_ts'] = time();
@@ -293,7 +296,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 		$kaog_coin_count = $input['kaog_coin'] ?: $temp[0]['kaog_coin'];
 	}
 	if($kaog_coin_count <= 0){
-		$kaog_coin_count = $input['kaog_coin'] = 5;
+		$kaog_coin_count = $input['kaog_coin'] = 50;
 	}
 	$discord_user->setData($input);
 	// kaog_coin
@@ -405,12 +408,15 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 		    $discord->setMessage($channel_id, '<@'.$user_id.'> 你有 '.number_format_string($kaog_coin_count).' 顆敲擊幣 <:sp4:501235091389939713>');
 			break;
 		case '!bet':
+			if(!in_array($channel_id, ['806901192654585867', '406747700415954955','800260290779938826'])){
+				break;
+			}
 // 			if($user_id != '327046840417517568'){
 // 			    $discord->setMessage($channel_id, '敲擊累了');
 // 				break;
 // 			}
-			if(!isset($time_roll[$guild_user]) || (time() - $time_roll[$guild_user] >= 3)){
-				$time_roll[$guild_user] = time();
+			if(!isset($time_bet[$guild_user]) || (time() - $time_bet[$guild_user] >= 3)){
+				$time_bet[$guild_user] = time();
 				
 				if(!is_numeric($content[1])){
 					break;
@@ -423,17 +429,19 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 					break;
 				}
 				$temp = $discord_user->getData('where user_id=?',[$user_id])[0];
-				// 歸零
-				if(rand(0,2000) == 0){
-		    		$discord->setMessage($channel_id, 'AAAAAAA 一待一待一待一待 <@'.$user_id.'> 滑倒了，敲擊幣全數當醫藥費 <:kaogcoin:807899860140556288> <:kaogcoin:807899860140556288> :money_with_wings: :money_with_wings: ');
+				// 砍半
+				if((rand(0,2000) == 0) || (($aaaaaaa_count++) == $aaaaaaa_number)){
+					$aaaaaaa_count = 0;
+					$aaaaaaa_number = rand(300,1000);
+		    		$discord->setMessage($channel_id, 'AAAAAAA 一待一待一待一待 <@'.$user_id.'> 滑倒了，一半敲擊幣拿去當醫藥費 <:kaogcoin:807899860140556288> <:kaogcoin:807899860140556288> :money_with_wings: :money_with_wings: ');
 			    	$discord_user->setData([
 			    		'id' => $temp['id'],
-			    		'kaog_coin' => 0,
+			    		'kaog_coin' => ($temp['kaog_coin'] * 0.5),
 			    		'aaaaaaa' => ((int)$temp['aaaaaaa'] + 1),
 			    	]);
 			    	break;
 				}
-				// 歸零
+				// 砍半
 
 				// 一般
 				// 49% +1 倍
