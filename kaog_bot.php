@@ -348,6 +348,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 > !bet <數量>
 > !top
 > !bottom
+> !aaaaaaa
 > (cd 半小時，任意頻道打字會獲得 10 顆敲擊幣)**');
 			break;
 		case '<:kaog:498532064337985556>':
@@ -390,6 +391,16 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 			}
 		    $discord->setMessage($channel_id, $message);
 			break;
+		case '!aaaaaaa':
+			$top = $discord_user->getData('order by aaaaaaa desc limit 15');
+			$message = '敲擊幣滑倒榜
+';
+			foreach ($top as $key => $value) {
+				$message .= '> '.($key + 1).'. '.$value['member_nick'].' 滑倒了 '.number_format_string($value['aaaaaaa']).' 次
+';
+			}
+		    $discord->setMessage($channel_id, $message);
+			break;
 		case '!kaog_coin':
 		    $discord->setMessage($channel_id, '<@'.$user_id.'> 你有 '.number_format_string($kaog_coin_count).' 顆敲擊幣 <:sp4:501235091389939713>');
 			break;
@@ -412,6 +423,23 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 					break;
 				}
 				$temp = $discord_user->getData('where user_id=?',[$user_id])[0];
+				// 歸零
+				if(rand(0,2000) == 0){
+		    		$discord->setMessage($channel_id, 'AAAAAAA 一待一待一待一待 <@'.$user_id.'> 滑倒了，敲擊幣全數當醫藥費 <:kaogcoin:807899860140556288> <:kaogcoin:807899860140556288> :money_with_wings: :money_with_wings: ');
+			    	$discord_user->setData([
+			    		'id' => $temp['id'],
+			    		'kaog_coin' => 0,
+			    		'aaaaaaa' => ((int)$temp['aaaaaaa'] + 1),
+			    	]);
+			    	break;
+				}
+				// 歸零
+
+				// 一般
+				// 49% +1 倍
+				// 49% -1 倍
+				// 1% +20 倍
+				// 1% -5 倍
 				$rand = rand(0,99);
 				$move = 0;
 		    	if($rand > 50){
@@ -432,6 +460,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 		    		'id' => $temp['id'],
 		    		'kaog_coin' => ((strpos($___,'-') !== false) ? 0 : $___),
 		    	]);
+				// 一般
 			}
 			break;
 		case '!網路很差':
@@ -451,10 +480,12 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/Arad.jpg');
 			break;
 		case '!c哥':
+		case '!c':
 	    	$key = rand(0, count($c_text) - 1);
 	        $discord->setMessage($channel_id, $c_text[$key]['message'], $c_text[$key]['file']);
 			break;
 		case '!c哥語錄總集篇':
+		case '!c_all':
 	    	$text = $cococola->getData('ORDER BY RAND() LIMIT 1');
 	        $discord->setMessage($channel_id, htmlspecialchars_decode($text[0]['content'], ENT_QUOTES));
 			break;
