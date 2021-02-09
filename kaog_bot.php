@@ -246,7 +246,7 @@ $time = [];
 $time_roll = [];
 $count = [];
 $time_bet = [];
-$aaaaaaa_count = 0;
+$aaaaaaa_count = 200;
 $aaaaaaa_number = rand(300,1000);
 $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
 	if ($data['author']['id'] == $client->getMyInfo()['id']){
@@ -511,6 +511,11 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 		case '!ななひら':
 		case '!nanahira':
 	    	$discord->setMessage($channel_id, '', APP_PATH.'cronjob/kaog_bot/file/nanahira.mp3');
+			break;
+		case '!a':
+			if($user_id == '327046840417517568'){
+	        	$discord->setMessage($channel_id, $aaaaaaa_count." ".$aaaaaaa_number);
+			}
 			break;
 		case '!exit':
 			if($user_id == '327046840417517568'){
