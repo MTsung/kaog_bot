@@ -246,8 +246,8 @@ $time = [];
 $time_roll = [];
 $count = [];
 $time_bet = [];
-$aaaaaaa_count = 200;
-$aaaaaaa_number = rand(300,1000);
+$aaaaaaa_count = 100;
+$aaaaaaa_number = rand(100,300);
 $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
 	if ($data['author']['id'] == $client->getMyInfo()['id']){
 	    return;
@@ -432,7 +432,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 				// 砍半
 				if((rand(0,2000) == 0) || (($aaaaaaa_count++) == $aaaaaaa_number)){
 					$aaaaaaa_count = 0;
-					$aaaaaaa_number = rand(300,1000);
+					$aaaaaaa_number = rand(100,300);
 		    		$discord->setMessage($channel_id, 'AAAAAAA 一待一待一待一待 <@'.$user_id.'> 滑倒了，一半敲擊幣拿去當醫藥費 <:kaogcoin:807899860140556288> <:kaogcoin:807899860140556288> :money_with_wings: :money_with_wings: ');
 			    	$discord_user->setData([
 			    		'id' => $temp['id'],
