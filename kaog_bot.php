@@ -418,6 +418,9 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 			if(!isset($time_bet[$guild_user]) || (time() - $time_bet[$guild_user] >= 3)){
 				$time_bet[$guild_user] = time();
 				
+				if($content[1] == 'all'){
+					$content[1] = $kaog_coin_count;
+				}
 				if(!is_numeric($content[1])){
 					break;
 				}
