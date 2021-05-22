@@ -532,6 +532,9 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	        	$discord->setMessage($channel_id, $aaaaaaa_count." ".$aaaaaaa_number);
 			}
 			break;
+		case 'm!m':
+	        $discord->setMessage($channel_id, "?");
+			break;
 		case '!exit':
 			if($user_id == '327046840417517568'){
 			    $discord->setMessage($channel_id, 'bye');
