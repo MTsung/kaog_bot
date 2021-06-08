@@ -302,7 +302,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	if($temp = $discord_user->getData('where user_id=?',[$user_id])){
 		if(((int)($temp[0]['last_ts'] ?? 0) + 1800 < time()) && !in_array($user_id, ['376342800377184256'])){
 			$input['last_ts'] = time();
-			$input['kaog_coin'] = bcadd(($temp[0]['kaog_coin'] ?? 0), 10);
+			$input['kaog_coin'] = bcadd(($temp[0]['kaog_coin'] ?? 0), 1000);
 		}
 		$input['id'] = $temp[0]['id'];
 		$kaog_coin_count = $input['kaog_coin'] ?: $temp[0]['kaog_coin'];
@@ -364,7 +364,7 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 > !top
 > !bottom
 > !aaaaaaa
-> (cd 半小時，任意頻道打字會獲得 10 顆敲擊幣)**');
+> (cd 半小時，任意頻道打字會獲得 1000 顆敲擊幣)**');
 			break;
 		case '<:kaog:498532064337985556>':
 	    	$key = rand(0, count($kago_text) - 1);
