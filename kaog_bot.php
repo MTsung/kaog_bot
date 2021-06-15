@@ -293,25 +293,27 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 	$content = $data['content'];// 內容
 	$nick = $data['member']['nick'];
 
-	// kaog_coin
-	$input = [
-		'user_id' => $user_id,
-		'member_nick' => $nick ?: $username,
-	];
-	$kaog_coin_count = 50;
-	if($temp = $discord_user->getData('where user_id=?',[$user_id])){
-		if(((int)($temp[0]['last_ts'] ?? 0) + 1800 < time()) && !in_array($user_id, ['376342800377184256'])){
-			$input['last_ts'] = time();
-			$input['kaog_coin'] = bcadd(($temp[0]['kaog_coin'] ?? 0), 1000);
+	if($guild_id == '406747699841466371'){
+		// kaog_coin
+		$input = [
+			'user_id' => $user_id,
+			'member_nick' => $nick ?: $username,
+		];
+		$kaog_coin_count = 50;
+		if($temp = $discord_user->getData('where user_id=?',[$user_id])){
+			if(((int)($temp[0]['last_ts'] ?? 0) + 1800 < time()) && !in_array($user_id, ['376342800377184256'])){
+				$input['last_ts'] = time();
+				$input['kaog_coin'] = bcadd(($temp[0]['kaog_coin'] ?? 0), 1000);
+			}
+			$input['id'] = $temp[0]['id'];
+			$kaog_coin_count = $input['kaog_coin'] ?: $temp[0]['kaog_coin'];
 		}
-		$input['id'] = $temp[0]['id'];
-		$kaog_coin_count = $input['kaog_coin'] ?: $temp[0]['kaog_coin'];
+		if($kaog_coin_count <= 0){
+			$kaog_coin_count = $input['kaog_coin'] = 50;
+		}
+		$discord_user->setData($input);
+		// kaog_coin
 	}
-	if($kaog_coin_count <= 0){
-		$kaog_coin_count = $input['kaog_coin'] = 50;
-	}
-	$discord_user->setData($input);
-	// kaog_coin
 
 
 	// 紀錄訊息次數
