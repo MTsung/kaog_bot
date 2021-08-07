@@ -550,6 +550,10 @@ $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, 
 
 
 
+	// 生日快樂
+	if(in_array("<@&853479295568838706>", $content)){
+		$discord->setRoles($guild_id, $user_id, "853479295568838706");
+	}
 
     // 敲擊手術室
 	$rolesId = [
