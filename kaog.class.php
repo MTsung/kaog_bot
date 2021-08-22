@@ -10,7 +10,7 @@ namespace MTsung{
 
 		function __construct($console,$table,$lang=LANG){
 			parent::__construct($console,$table,$lang);
-			$this->checkTable();
+			// $this->checkTable();
 			$this->tempLockSort = false;
 		}
 
