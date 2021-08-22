@@ -7,12 +7,12 @@ class help implements command
 
     public function __construct($event, $discord)
     {
-	    $this->discord = $discord;
-	    $this->event = $event;
+        $this->discord = $discord;
+        $this->event = $event;
     }
 
-	public function run()
-	{
-	    $this->discord->setEmbeds($this->event->channel_id(), kaog_bot_embeds::help());
-	}
+    public function run()
+    {
+        $this->discord->setEmbeds($this->event->channel_id(), kaog_bot_embeds::help());
+    }
 }
