@@ -3,343 +3,57 @@ use React\EventLoop\Factory;
 use shanemcc\discord\DiscordClient;
 
 include_once(__DIR__ ."/../../include/header.php");
+require_once(__DIR__.'/vendor/autoload.php');
+require_once(__DIR__.'/kaog.class.php');
+require_once(__DIR__.'/config.php');
+include_once(__DIR__ .'/kaog_bot_event.class.php');
+include_once(__DIR__ .'/kaog_bot_embeds.class.php');
+
 define('CACHE_PATH',APP_PATH."cache/123/");
 
-require __DIR__.'/vendor/autoload.php';
-require __DIR__.'/kaog.class.php';
-
+// error_reporting(E_ALL);
 set_time_limit(0);
-ini_set('upload_max_filesize ', '800M');
-ini_set('post_max_size', '800M');
 ini_set('memory_limit', '-1');
 
-error_log('kaog_bot run.'.DATE);
-
-$clientID = '800231664336502804';
-$clientSecret = 'sp81y1I5zO4R2Gyq3ULvvQ1fbLVoGzJ3';
-$token = 'ODAwMjMxNjY0MzM2NTAyODA0.YAPH0A.p1hMKVzqVYD6aCQ7lqUb0Z1pas4';
+error_log('kaog_bot2 run.'.DATE);
 
 $client = new DiscordClient($clientID, $clientSecret, $token);
 $loop = Factory::create();
 $client->setLoopInterface($loop);
 
 $discord = new MTsung\discord($token);
-
-$kago_text = [
-	[
-		'message' => '我說很清楚了
-這裡就是一個鋼琴交流群組
-拜託 不要 來我這邊
-想取得任何apex 交流以外的東西
-你知道我今天從頭到尾只是覺得你很煩而已
-我沒有說你在釣魚
-也沒有預設你的立場
-但你說的話就是會讓人感覺很討厭
-然後 對人說話拜託有點尊重
-就算我在你心裡是個白痴
-是個智障
-但拜託你
-如果你還想跟別人溝通的話
-至少先把尊重兩個字放在心上',
-		'file' => null
-	],
-	[
-		'message' => '<:sp4:501235091389939713>',
-		'file' => null
-	],
-	[
-		'message' => '',
-		'file' => APP_PATH.'cronjob/kaog_bot/file/kaog_Illuminati.png'
-	],
-	[
-		'message' => 'owo',
-		'file' => null
-	],
-	[
-		'message' => '大家好，我是敲擊的媽媽，昨天晚餐時敲擊想跟我討論他的T3，我勸他說先把他的晚餐處理好再來說，沒想到敲擊他惱羞成怒，大喊了一聲：「我是傻逼！」把我狠狠地從椅子上撞倒在地上，然後搶走我碗裡的陽春麵跟之後要繳的水電費，留下摔斷三根肋骨的我跑回房間玩天降虛擬偶像，不管我怎麼叫他，他完全不理我這個當媽媽的，唉！為何我兒子會變成這樣，他以前是那麼的純樸可愛，一定是PPY帶壞他的！可以請聊天室的各位觀眾幫我勸勸我兒子回頭嗎？',
-		'file' => null
-	],
-];
-
-$c_text = [
-	[
-		'message' => '人品是一切之先行
-沒有人品 不用討論
-連話語權 出席權都沒有
-沒有意義',
-		'file' => null
-	],
-	[
-		'message' => '其實我不是沒良心，只是面對看不見盡頭的絕望與傷悲，
-
-我的心在一次次的受傷後，已經結出厚厚一層疤，
-
-然後我學會不輕易去碰觸它。我善於隱藏，用幽默嘲弄生命的無常；
-
-我試著不去看命運的殘酷，卻更感恩手裡能掌握的幸福。',
-		'file' => null
-	],
-	[
-		'message' => '朋友圈裡肯定有一個邏輯狂魔
-
-會瘋狂說別人邏輯有問題
-
-講一大堆別人根本不想看的東西
-
-好幾行 手都不會酸一樣
-
-就一直狂說自己立場的東西
-
-還會把自己帶入別人的角度來說
-
-邏輯狂魔到底在想什麼
-
-常常就是邏輯狂魔搞的氣氛超級尷尬
-
-你吵贏了這次 失去一個或多個朋友
-
-值得嗎 ? 邏輯狂魔',
-		'file' => null
-	],
-	[
-		'message' => '沒關係 一次多一點 貢獻國庫',
-		'file' => null
-	],
-	[
-		'message' => '沒關係 我一起送
-看他認不認為你在故意隱射',
-		'file' => null
-	],
-	[
-		'message' => '腦殘',
-		'file' => null
-	],
-	[
-		'message' => 'LLDX',
-		'file' => null
-	],
-	[
-		'message' => '邏輯死亡喔',
-		'file' => null
-	],
-	[
-		'message' => '單純邏輯問題',
-		'file' => null
-	],
-	[
-		'message' => '邏輯的問題',
-		'file' => null
-	],
-	[
-		'message' => '神邏輯',
-		'file' => null
-	],
-	[
-		'message' => '根本沒有邏輯',
-		'file' => null
-	],
-	[
-		'message' => '邏輯問題而已',
-		'file' => null
-	],
-	[
-		'message' => '這完全邏輯問題',
-		'file' => null
-	],
-	[
-		'message' => '重大聲明
-
-我從未也無意在網路上公開或PO出證明
-至少在巴哈姆特這種匿名論壇上沒有、也不可能會有
-來說明我是專業法律人這件事
-
-我沒有說我是不是專業法律人
-請不要預設立場 這也沒有意義
-你愛看就看 不愛看就滾
-你沒有權利及義務要求我證明什麼
-反之亦同 我沒有義務要拘束於你
-
-我有寫錯 友善提醒 非常歡迎
-我會做內容上合理的調整
-
-拜託一下 倫理規範不是塑膠 我會怕怕
-不要再跳針要我證明 一事不再理
-諭知免訴 不要一直拿過來重複說
-
-我只是一個 小小的
-星爆暨吉娃娃廢文專業巴友',
-		'file' => null
-	],
-	[
-		'message' => '不用懷疑我的專業  這沒有意義
-
-你只需要看我哪邊有寫錯
-
-跟我說一聲 我們一起把它寫好就好
-
-我歡迎合理且友善之討論 評判',
-		'file' => null
-	],
-	[
-		'message' => '不要問我幾歲 念哪裡畢業
-
-我不願意透露我的私人資訊
-
-再說
-
-你為何不懷疑我這隻帳號
-
-到底是不是多人使用一帳?',
-		'file' => null
-	],
-	[
-		'message' => '可憐
-辯不贏看我不爽罷了',
-		'file' => null
-	],
-	[
-		'message' => '踢??????',
-		'file' => null
-	],
-	[
-		'message' => '我沒有說錯任何法律相關阿',
-		'file' => null
-	],
-	[
-		'message' => '就沒有說錯東西啊',
-		'file' => null
-	],
-	[
-		'message' => '奇怪
-合法 為何我不能做',
-		'file' => null
-	],
-	[
-		'message' => '依法行言論阿',
-		'file' => null
-	],
-	[
-		'message' => '去我小屋首頁看',
-		'file' => null
-	],
-	[
-		'message' => '不用預設立場
-沒有意義
-我聲明過好幾次',
-		'file' => null
-	],
-	[
-		'message' => '我現在說 射在女童腿上 你們也不一定要看阿',
-		'file' => null
-	],
-];
-
-$sleep_text = [
-	[
-		'message' => '',
-		'file' => APP_PATH.'cronjob/kaog_bot/file/jeff_sleep.png'
-	],
-	[
-		'message' => '',
-		'file' => APP_PATH.'cronjob/kaog_bot/file/www_sleep.png'
-	],
-	[
-		'message' => '',
-		'file' => APP_PATH.'cronjob/kaog_bot/file/arad_sleep.png'
-	],
-	[
-		'message' => '',
-		'file' => APP_PATH.'cronjob/kaog_bot/file/jeff_sleep1.jpeg'
-	],
-];
+$kago_text = include(APP_PATH.'cronjob/kaog_bot/text/kaog.php');
+$c_text = include(APP_PATH.'cronjob/kaog_bot/text/cococola.php');
+$sleep_text = include(APP_PATH.'cronjob/kaog_bot/text/sleep.php');
 
 
-$time = [];
 $time_roll = [];
-$count = [];
 $time_bet = [];
 $aaaaaaa_count = 100;
-$aaaaaaa_number = rand(100,300);
+$aaaaaaa_number = rand(100, 300);
 $client->on('event.MESSAGE_CREATE', function(DiscordClient $client, int $shard, String $event, Array $data){
-	if ($data['author']['id'] == $client->getMyInfo()['id']){
-	    return;
-	}
-    // error_log('kaog_bot memory_get_usage: '.memory_get_usage().'/'.memory_get_usage(true));
+	if ($data['author']['id'] == $client->getMyInfo()['id']) return;
 
-    global $discord, $kago_text, $sleep_text, $c_text, $console, $time, $count, $time_roll,$aaaaaaa_count,$aaaaaaa_number;
-    
-    // sql 連線閒置太久會消失 要重 new 
-    if(!$console->conn->Execute('SHOW TABLES;')){
-		$console->conn = ADONewConnection("pdo");
-		$console->conn->connect('mysql:host='.MTsung\config::DB_HOST.';dbname='.MTsung\config::DB_NAME.';charset=utf8mb4',MTsung\config::DB_USER,MTsung\config::DB_PASSWORD);
-		$console->conn->Execute("SET sql_mode = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';");
-		$console->conn->Execute("SET NAMES utf8mb4;");
-		$console->conn->Execute("SET CHARACTER_SET_CLIENT=utf8mb4;");
-		$console->conn->Execute("SET CHARACTER_SET_RESULTS=utf8mb4;");
-		$console->conn->Execute("SET CHARACTER_SET_CONNECTION=utf8mb4;");
-		$console->conn->Execute("SET GLOBAL time_zone = '".MTsung\config::TIME_ZONE."';");
-		$console->conn->Execute("SET time_zone = '".MTsung\config::TIME_ZONE."';");
-		$console->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-	}
-	
-	$kaog = new MTsung\kaog($console,'bot_kaog','');
-	$cococola = new MTsung\dataList($console,'cococola','');
-	$discord_user = new MTsung\dataList($console,'discord_user','');
+	global $console, $discord;
+    global $kago_text, $sleep_text, $c_text, $time_roll, $aaaaaaa_count, $aaaaaaa_number;
 
-    $guild_id = $data['guild_id'];// 群組 id
-    $user_id = $data['author']['id'];// user id
-    $username = $data['author']['username'];// username
-    $channel_id = $data['channel_id'];// 頻道 id
-	$content = $data['content'];// 內容
-	$nick = $data['member']['nick'];
+// 暫時exit
+if($data['content'] == "exit" && $data['author']['id'] == '327046840417517568'){
+    $discord->setMessage($data['channel_id'], 'bye');
+	error_log('kaog_bot bye.');
+    exit;
+}
 
-	if($guild_id == '406747699841466371'){
-		// kaog_coin
-		$input = [
-			'user_id' => $user_id,
-			'member_nick' => $nick ?: $username,
-		];
-		$kaog_coin_count = 50;
-		if($temp = $discord_user->getData('where user_id=?',[$user_id])){
-			if(((int)($temp[0]['last_ts'] ?? 0) + 1800 < time()) && !in_array($user_id, ['376342800377184256'])){
-				$input['last_ts'] = time();
-				$input['kaog_coin'] = bcadd(($temp[0]['kaog_coin'] ?? 0), 1000);
-			}
-			$input['id'] = $temp[0]['id'];
-			$kaog_coin_count = $input['kaog_coin'] ?: $temp[0]['kaog_coin'];
-		}
-		if($kaog_coin_count <= 0){
-			$kaog_coin_count = $input['kaog_coin'] = 50;
-		}
-		$discord_user->setData($input);
-		// kaog_coin
-	}
+	kaog_bot_event::run($console, $discord)
+		->setData($client, $shard, $event, $data)
+		->runSql()
+		->setKaogCoin()
+		->command();
 
-
-	// 紀錄訊息次數
-	$guild_user = $guild_id.'_'.$user_id;
-	if(!isset($time[$guild_user]) || (time() - $time[$guild_user] >= 10)){
-		$input = [
-			'guild_id' => $guild_id,
-			'user_id' => $user_id,
-			'member_nick' => $nick ?: $username,
-			'count' => 1,
-			'year' => date('y'),
-			'month' => date('n'),
-		];
-		if($temp = $kaog->getData('where guild_id=? and user_id=? and year=? and month=?',[$guild_id, $user_id, date('y'), date('n')])){
-			$input['id'] = $temp[0]['id'];
-			$input['count'] = $temp[0]['count'] + 1;
-		}
-		$kaog->setData($input);
-		$time[$guild_user] = time();
-	}
-	foreach ($time as $key => $value) {
-		if(time() - $value >= 10){
-			unset($time[$key]);
-		}
-	}
-	// 紀錄訊息次數
+error_log($data['content']);
+return;
+error_log('kaog_bot2 exit.'.DATE);
+	exit;
 
 	$content = explode(" ", $content);
 
