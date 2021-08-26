@@ -25,28 +25,28 @@ class kaog_bot_event
         '!help' => 'help',
         '!kaog' => 'help',
         '!敲擊' => 'help',
-        '<:kaog:498532064337985556>' => '',
-        '!4k_dan' => '',
-        '!roll' => '',
+        '<:kaog:498532064337985556>' => 'kaog',
+        '!4k_dan' => 'dan_4k',
+        '!roll' => 'roll',
         '!top' => '',
         '!bottom' => '',
         '!aaaaaaa' => '',
-        '!kaog_coin' => '',
+        '!kaog_coin' => 'kaog_coin',
         '!bet' => '',
-        '!網路很差' => '',
-        '!酒桶教學' => '',
-        '!傑夫失戀' => '',
-        '!傑夫醬' => '',
-        '!Arad_is_Jakads' => '',
+        '!網路很差' => 'network_is_bad',
+        '!酒桶教學' => 'gragas_teaching',
+        '!傑夫失戀' => 'jeff_dump',
+        '!傑夫醬' => 'jeff_chan',
+        '!Arad_is_Jakads' => 'arad_is_jakads',
         '!c哥' => '',
         '!c' => '',
         '!c哥語錄總集篇' => '',
         '!c_all' => '',
-        '!特哥' => '',
-        '!水沙蓮' => '',
-        '!睡覺' => '',
-        '!ななひら' => '',
-        '!nanahira' => '',
+        '!特哥' => 'te',
+        '!水沙蓮' => 'nijuu',
+        '!睡覺' => 'sleep',
+        '!ななひら' => 'nanahira',
+        '!nanahira' => 'nanahira',
         '!a' => '',
         '!exit' => 'kaog_exit',
     ];
@@ -190,5 +190,27 @@ class kaog_bot_event
     public function nickname()
     {
         return $this->data['member']['nick'];
+    }
+
+    public function kaog_coin()
+    {
+        return $this->kaog_coin_count;
+    }
+
+
+    public function number_format_string($number, $delimeter = ',')
+    {
+        $number = explode('.', $number)[0];
+        if (strpos($number, '-') !== false) {
+            return "0";
+        }
+        for ($i = $sub_i = 0; $i < strlen($number); $i++) {
+            if ($number[$i]) {
+                break;
+            }
+            $sub_i++;
+        }
+        $number = substr($number, $sub_i);
+        return strrev(implode($delimeter, str_split(strrev($number), 3))) ?: 0;
     }
 }
