@@ -4,13 +4,13 @@ use React\EventLoop\Factory;
 use shanemcc\discord\DiscordClient;
 
 include_once(__DIR__."/../../include/header.php");
-require_once(__DIR__.'/vendor/autoload.php');
-require_once(__DIR__.'/kaog.class.php');
-require_once(__DIR__.'/config.php');
+include_once(__DIR__.'/vendor/autoload.php');
+include_once(__DIR__.'/kaog.class.php');
+include_once(__DIR__.'/config.php');
 include_once(__DIR__.'/kaog_bot_event.class.php');
 include_once(__DIR__.'/kaog_bot_embeds.class.php');
 
-define('CACHE_PATH', APP_PATH."cache/123/");
+define('CACHE_PATH', APP_PATH."cache/kaog_bot/");
 
 // error_reporting(E_ALL);
 set_time_limit(0);
