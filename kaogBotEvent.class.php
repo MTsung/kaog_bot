@@ -120,13 +120,13 @@ class kaogBotEvent
         if ($this->guildId() != MANIA_ID) return $this;
 
         $input = [
-            'user_id' => $this->user_id(),
+            'user_id' => $this->userId(),
             'member_nick' => $this->nickname() ?: $this->username(),
         ];
 
         $this->kaog_coin_count = $this->kaog_coin_min;
 
-        if ($temp = $this->discord_user->getData('where user_id=?', [$this->user_id()])) {
+        if ($temp = $this->discord_user->getData('where user_id=?', [$this->userId()])) {
             $user = $temp[0];
             $last_ts = (int)($user['last_ts'] ?? 0);
             $now = time();
@@ -179,7 +179,7 @@ class kaogBotEvent
         $content = explode(" ", $this->content());
         $this->r($this->command[$content[0]] ?? '');
 
-        // 包含就執行
+        // 傳送的內容包含就執行
         if ($this->contentContain) {
             foreach ($this->contentContain as $text => $className) {
                 if (strpos($this->content(), $text) !== false){
@@ -187,6 +187,9 @@ class kaogBotEvent
                 }
             }
         }
+
+        // 在某個 channel 就執行
+        $this->r($this->channelIdContain[$this->channelId()] ?? '');
 
         return $this;
     }
@@ -207,7 +210,7 @@ class kaogBotEvent
     }
 
     // user id
-    public function user_id()
+    public function userId()
     {
         return $this->data['author']['id'];
     }

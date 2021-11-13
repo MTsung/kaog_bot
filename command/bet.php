@@ -90,6 +90,7 @@ class bet implements command
 
     private function useKaogCoin($content)
     {
+        $content = explode(" ", $content);
         if ($content[1] == 'all') {
             return $this->event->kaogCoin();
         }
