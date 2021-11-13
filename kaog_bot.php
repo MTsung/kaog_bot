@@ -56,36 +56,6 @@ $client->on('event.MESSAGE_CREATE', function (DiscordClient $client, int $shard,
 
     //指令
     switch ($content[0]) {
-        case '!top':
-            $top = $discord_user->getData('order by CHAR_LENGTH(kaog_coin) desc,kaog_coin desc limit 15');
-            $message = '敲擊幣富豪榜
-';
-            foreach ($top as $key => $value) {
-                $message .= '> '.($key + 1).'. '.$value['member_nick'].' 有 '.number_format_string($value['kaog_coin']).' 顆敲擊幣
-';
-            }
-            $discord->setMessage($channel_id, $message);
-            break;
-        case '!bottom':
-            $top = $discord_user->getData('order by CHAR_LENGTH(kaog_coin) asc,kaog_coin asc limit 15');
-            $message = '敲擊幣窮鬼榜
-';
-            foreach ($top as $key => $value) {
-                $message .= '> '.($key + 1).'. '.$value['member_nick'].' 有 '.number_format_string($value['kaog_coin']).' 顆敲擊幣
-';
-            }
-            $discord->setMessage($channel_id, $message);
-            break;
-        case '!aaaaaaa':
-            $top = $discord_user->getData('order by aaaaaaa desc limit 15');
-            $message = '敲擊幣滑倒榜
-';
-            foreach ($top as $key => $value) {
-                $message .= '> '.($key + 1).'. '.$value['member_nick'].' 滑倒了 '.number_format_string($value['aaaaaaa']).' 次
-';
-            }
-            $discord->setMessage($channel_id, $message);
-            break;
         case '!bet':
             if (!in_array($channel_id, ['806901192654585867', '406747700415954955', '800260290779938826'])) {
                 break;
@@ -152,16 +122,6 @@ $client->on('event.MESSAGE_CREATE', function (DiscordClient $client, int $shard,
                 ]);
                 // 一般
             }
-            break;
-        case '!c哥':
-        case '!c':
-            $key = rand(0, count($c_text) - 1);
-            $discord->setMessage($channel_id, $c_text[$key]['message'], $c_text[$key]['file']);
-            break;
-        case '!c哥語錄總集篇':
-        case '!c_all':
-            $text = $cococola->getData('ORDER BY RAND() LIMIT 1');
-            $discord->setMessage($channel_id, htmlspecialchars_decode($text[0]['content'], ENT_QUOTES));
             break;
     }
     //指令
