@@ -1,6 +1,6 @@
 <?php
 
-class kaog_bot_event
+class kaogBotEvent
 {
     private static $instance;
 
@@ -26,18 +26,18 @@ class kaog_bot_event
         '!kaog' => 'help',
         '!敲擊' => 'help',
         '<:kaog:498532064337985556>' => 'kaog',
-        '!4k_dan' => 'dan_4k',
+        '!4k_dan' => 'dan4k',
         '!roll' => 'roll',
-        '!top' => '',
+        '!top' => 'top',
         '!bottom' => '',
         '!aaaaaaa' => '',
         '!kaog_coin' => 'kaog_coin',
         '!bet' => '',
-        '!網路很差' => 'network_is_bad',
-        '!酒桶教學' => 'gragas_teaching',
-        '!傑夫失戀' => 'jeff_dump',
-        '!傑夫醬' => 'jeff_chan',
-        '!Arad_is_Jakads' => 'arad_is_jakads',
+        '!網路很差' => 'networkIsBad',
+        '!酒桶教學' => 'gragasTeaching',
+        '!傑夫失戀' => 'jeffDump',
+        '!傑夫醬' => 'jeffChan',
+        '!Arad_is_Jakads' => 'aradIsJakads',
         '!c哥' => '',
         '!c' => '',
         '!c哥語錄總集篇' => '',
@@ -48,7 +48,7 @@ class kaog_bot_event
         '!ななひら' => 'nanahira',
         '!nanahira' => 'nanahira',
         '!a' => '',
-        '!exit' => 'kaog_exit',
+        '!exit' => 'kaogExit',
     ];
 
     private function __construct($console, $discord)
@@ -108,14 +108,14 @@ class kaog_bot_event
     public function setKaogCoin()
     {
         // 只有採白塊才有這機制
-        if ($this->guild_id() != MANIA_ID) return $this;
+        if ($this->guildId() != MANIA_ID) return $this;
 
         $input = [
             'user_id' => $this->user_id(),
             'member_nick' => $this->nickname() ?: $this->username(),
         ];
 
-        $this->kaog_coin_count = $this->$kaog_coin_min;
+        $this->kaog_coin_count = $this->kaog_coin_min;
 
         if ($temp = $this->discord_user->getData('where user_id=?', [$this->user_id()])) {
             $user = $temp[0];
@@ -131,7 +131,7 @@ class kaog_bot_event
         }
 
         if ($this->kaog_coin_count <= 0) {
-            $this->kaog_coin_count = $input['kaog_coin'] = $this->$kaog_coin_min;
+            $this->kaog_coin_count = $input['kaog_coin'] = $this->kaog_coin_min;
         }
 
         $this->discord_user->setData($input);
@@ -157,7 +157,7 @@ class kaog_bot_event
     }
 
     // 群組 id
-    public function guild_id()
+    public function guildId()
     {
         return $this->data['guild_id'];
     }
@@ -175,7 +175,7 @@ class kaog_bot_event
     }
 
     // 頻道 id
-    public function channel_id()
+    public function channelId()
     {
         return $this->data['channel_id'];
     }
@@ -192,13 +192,12 @@ class kaog_bot_event
         return $this->data['member']['nick'];
     }
 
-    public function kaog_coin()
+    public function kaogCoin()
     {
         return $this->kaog_coin_count;
     }
 
-
-    public function number_format_string($number, $delimeter = ',')
+    public function numberFormatString($number, $delimeter = ',')
     {
         $number = explode('.', $number)[0];
         if (strpos($number, '-') !== false) {

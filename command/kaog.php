@@ -15,6 +15,6 @@ class kaog implements command
     {
         $kago_text = include(APP_PATH.'cronjob/kaog_bot/text/kaog.php');
         $key = rand(0, count($kago_text) - 1);
-        $this->discord->setMessage($this->event->channel_id(), $kago_text[$key]['message'], $kago_text[$key]['file']);
+        $this->discord->setMessage($this->event->channelId(), $kago_text[$key]['message'], $kago_text[$key]['file']);
     }
 }

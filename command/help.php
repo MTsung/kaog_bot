@@ -13,6 +13,6 @@ class help implements command
 
     public function run()
     {
-        $this->discord->setEmbeds($this->event->channel_id(), kaog_bot_embeds::help());
+        $this->discord->setEmbeds($this->event->channelId(), kaogBotEmbeds::help());
     }
 }

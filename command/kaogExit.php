@@ -1,6 +1,6 @@
 <?php
 
-class kaog_exit implements command
+class kaogExit implements command
 {
     private $discord;
     private $event;
@@ -13,11 +13,11 @@ class kaog_exit implements command
 
     public function run()
     {
-        if ($this->event->user_id() == ADMIN_ID) {
-            $this->discord->setMessage($this->event->channel_id(), 'bye');
+        if ($this->event->userId() == ADMIN_ID) {
+            $this->discord->setMessage($this->event->channelId(), 'bye');
             error_log('kaog_bot2 bye.');
             exit;
         }
-        $this->discord->setMessage($this->event->channel_id(), ':question:');
+        $this->discord->setMessage($this->event->channelId(), ':question:');
     }
 }

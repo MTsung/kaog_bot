@@ -13,6 +13,6 @@ class nanahira implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channel_id(), '', APP_PATH.'cronjob/kaog_bot/file/nanahira.mp3');
+        $this->discord->setMessage($this->event->channelId(), '', APP_PATH.'cronjob/kaog_bot/file/nanahira.mp3');
     }
 }

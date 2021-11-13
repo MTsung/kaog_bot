@@ -1,6 +1,6 @@
 <?php
 
-class kaog_bot_embeds
+class kaogBotEmbeds
 {
     public static function help()
     {

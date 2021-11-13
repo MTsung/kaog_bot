@@ -13,7 +13,7 @@ class te implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channel_id(), '雷中之雷 貫中貫己 
+        $this->discord->setMessage($this->event->channelId(), '雷中之雷 貫中貫己 
 姆中網中 清口聽聽', APP_PATH.'cronjob/kaog_bot/file/ter.png');
     }
 }

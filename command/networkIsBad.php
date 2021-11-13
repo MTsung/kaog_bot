@@ -1,6 +1,6 @@
 <?php
 
-class gragas_teaching implements command
+class networkIsBad implements command
 {
     private $discord;
     private $event;
@@ -13,6 +13,6 @@ class gragas_teaching implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channel_id(), '', APP_PATH.'cronjob/kaog_bot/file/酒桶教學.mp4');
+        $this->discord->setMessage($this->event->channelId(), '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
     }
 }

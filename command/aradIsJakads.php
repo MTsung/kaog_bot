@@ -1,6 +1,6 @@
 <?php
 
-class dan_4k implements command
+class aradIsJakads implements command
 {
     private $discord;
     private $event;
@@ -13,6 +13,6 @@ class dan_4k implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channel_id(), 'https://sites.google.com/view/danreform/home');
+        $this->discord->setMessage($this->event->channelId(), '', APP_PATH.'cronjob/kaog_bot/file/Arad.jpg');
     }
 }

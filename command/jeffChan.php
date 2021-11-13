@@ -1,6 +1,6 @@
 <?php
 
-class jeff_chan implements command
+class jeffChan implements command
 {
     private $discord;
     private $event;
@@ -13,6 +13,6 @@ class jeff_chan implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channel_id(), '', APP_PATH.'cronjob/kaog_bot/file/jeff_chan.jpg');
+        $this->discord->setMessage($this->event->channelId(), '', APP_PATH.'cronjob/kaog_bot/file/jeff_chan.jpg');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-class arad_is_jakads implements command
+class gragasTeaching implements command
 {
     private $discord;
     private $event;
@@ -13,6 +13,6 @@ class arad_is_jakads implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channel_id(), '', APP_PATH.'cronjob/kaog_bot/file/Arad.jpg');
+        $this->discord->setMessage($this->event->channelId(), '', APP_PATH.'cronjob/kaog_bot/file/酒桶教學.mp4');
     }
 }

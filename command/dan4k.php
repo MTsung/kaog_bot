@@ -1,6 +1,6 @@
 <?php
 
-class network_is_bad implements command
+class dan4k implements command
 {
     private $discord;
     private $event;
@@ -13,6 +13,6 @@ class network_is_bad implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channel_id(), '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
+        $this->discord->setMessage($this->event->channelId(), 'https://sites.google.com/view/danreform/home');
     }
 }

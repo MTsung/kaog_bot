@@ -14,6 +14,6 @@ class roll implements command
     public function run()
     {
         $rand = rand(0, 100);
-        $this->discord->setMessage($this->event->channel_id(), $rand);
+        $this->discord->setMessage($this->event->channelId(), $rand);
     }
 }

@@ -5,10 +5,9 @@ use shanemcc\discord\DiscordClient;
 
 include_once(__DIR__."/../../include/header.php");
 include_once(__DIR__.'/vendor/autoload.php');
-include_once(__DIR__.'/kaog.class.php');
 include_once(__DIR__.'/config.php');
-include_once(__DIR__.'/kaog_bot_event.class.php');
-include_once(__DIR__.'/kaog_bot_embeds.class.php');
+include_once(__DIR__.'/kaogBotEvent.class.php');
+include_once(__DIR__.'/kaogBotEmbeds.class.php');
 
 define('CACHE_PATH', APP_PATH."cache/kaog_bot/");
 
@@ -23,9 +22,6 @@ $loop = Factory::create();
 $client->setLoopInterface($loop);
 
 $discord = new MTsung\discord($token);
-$kago_text = include(APP_PATH.'cronjob/kaog_bot/text/kaog.php');
-$c_text = include(APP_PATH.'cronjob/kaog_bot/text/cococola.php');
-$sleep_text = include(APP_PATH.'cronjob/kaog_bot/text/sleep.php');
 
 
 $time_roll = [];
@@ -45,7 +41,7 @@ $client->on('event.MESSAGE_CREATE', function (DiscordClient $client, int $shard,
         exit;
     }
 
-    kaog_bot_event::run($console, $discord)
+    kaogBotEvent::run($console, $discord)
         ->setData($client, $shard, $event, $data)
         ->runSql()
         ->setKaogCoin()

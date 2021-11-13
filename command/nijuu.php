@@ -13,6 +13,6 @@ class nijuu implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channel_id(), 'https://youtu.be/S9lVCA2xv40');
+        $this->discord->setMessage($this->event->channelId(), 'https://youtu.be/S9lVCA2xv40');
     }
 }
