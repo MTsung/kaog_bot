@@ -17,9 +17,8 @@ class kaogBotEvent
     private $data;
     private $discord;
 
-    private $kaog;
     private $cococola;
-    private $discord_user;
+    private $discordUser;
 
     private $command = [
         '!help' => 'help',
@@ -29,8 +28,8 @@ class kaogBotEvent
         '!4k_dan' => 'dan4k',
         '!roll' => 'roll',
         '!top' => 'top',
-        '!bottom' => '',
-        '!aaaaaaa' => '',
+        '!bottom' => 'bottom',
+        '!aaaaaaa' => 'aaaaaaa',
         '!kaog_coin' => 'kaog_coin',
         '!bet' => '',
         '!網路很差' => 'networkIsBad',
@@ -38,10 +37,10 @@ class kaogBotEvent
         '!傑夫失戀' => 'jeffDump',
         '!傑夫醬' => 'jeffChan',
         '!Arad_is_Jakads' => 'aradIsJakads',
-        '!c哥' => '',
-        '!c' => '',
-        '!c哥語錄總集篇' => '',
-        '!c_all' => '',
+        '!c哥' => 'c',
+        '!c' => 'c',
+        '!c哥語錄總集篇' => 'cAll',
+        '!c_all' => 'cAll',
         '!特哥' => 'te',
         '!水沙蓮' => 'nijuu',
         '!睡覺' => 'sleep',
@@ -56,9 +55,8 @@ class kaogBotEvent
         $this->console = $console;
         $this->discord = $discord;
 
-        $this->kaog = new MTsung\kaog($this->console, 'bot_kaog', '');
         $this->cococola = new MTsung\center($this->console, 'cococola', '');
-        $this->discord_user = new MTsung\center($this->console, 'discord_user', '');
+        $this->discordUser = new MTsung\center($this->console, 'discord_user', '');
 
     }
 
@@ -195,6 +193,16 @@ class kaogBotEvent
     public function kaogCoin()
     {
         return $this->kaog_coin_count;
+    }
+
+    public function cococola()
+    {
+        return $this->cococola;
+    }
+
+    public function discordUser()
+    {
+        return $this->discordUser;
     }
 
     public function numberFormatString($number, $delimeter = ',')
