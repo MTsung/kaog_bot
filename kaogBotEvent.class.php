@@ -10,6 +10,9 @@ class kaogBotEvent
 
     private $kaog_coin_count = 0;
 
+    private $aaaaaaa_count;// 被 bet 幾次了
+    private $aaaaaaa_number;// 到這個數會滑倒
+
     private $console;
     private $client;
     private $shard;
@@ -31,7 +34,7 @@ class kaogBotEvent
         '!bottom' => 'bottom',
         '!aaaaaaa' => 'aaaaaaa',
         '!kaog_coin' => 'kaog_coin',
-        '!bet' => '',
+        '!bet' => 'bet',
         '!網路很差' => 'networkIsBad',
         '!酒桶教學' => 'gragasTeaching',
         '!傑夫失戀' => 'jeffDump',
@@ -46,8 +49,16 @@ class kaogBotEvent
         '!睡覺' => 'sleep',
         '!ななひら' => 'nanahira',
         '!nanahira' => 'nanahira',
-        '!a' => '',
         '!exit' => 'kaogExit',
+    ];
+
+    private $contentContain = [
+        '<@&853479295568838706>' => 'birthday',
+    ];
+
+    private $channelIdContain = [
+        '800271393190051840' => 'seam',
+        '800272572339322930' => 'cut',
     ];
 
     private function __construct($console, $discord)
@@ -137,21 +148,56 @@ class kaogBotEvent
         return $this;
     }
 
+    public function checkAaaaaaa()
+    {
+        // 固定機率滑倒
+        if (rand(0, 2000) == 0) {
+            return true;
+        }
+
+        if ($this->aaaaaaa_number == 0) {
+            $this->resetAaaaaaa();
+        }
+
+        if ($this->aaaaaaa_number == $this->aaaaaaa_count++) {
+            $this->resetAaaaaaa();
+            return true;
+        }
+        return false;
+    }
+
+    private function resetAaaaaaa()
+    {
+        $this->aaaaaaa_number = rand(100, 300);
+    }
+
     public function command()
     {
         if (!$this->content()) return $this;
 
+        // 第一個空白前文字當指令
         $content = explode(" ", $this->content());
-        $class_name = $this->command[$content[0]] ?? '';
+        $this->r($this->command[$content[0]] ?? '');
 
-        if ($class_name) {
-            require_once(APP_PATH.'cronjob/kaog_bot/command/command.php');
-            require_once(APP_PATH.'cronjob/kaog_bot/command/'.$class_name.'.php');
-            $command = new $class_name($this, $this->discord);
-            $command->run();
+        // 包含就執行
+        if ($this->contentContain) {
+            foreach ($this->contentContain as $text => $className) {
+                if (strpos($this->content(), $text) !== false){
+                    $this->r($className);
+                }
+            }
         }
 
         return $this;
+    }
+
+    private function r($className)
+    {
+        if ($className) {
+            require_once(APP_PATH.'cronjob/kaog_bot/command/command.php');
+            require_once(APP_PATH.'cronjob/kaog_bot/command/'.$className.'.php');
+            (new $className($this, $this->discord))->run();
+        }
     }
 
     // 群組 id

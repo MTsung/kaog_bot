@@ -5,5 +5,6 @@ $clientSecret = '';
 $token = '';
 
 
-define('MANIA_ID', '406747699841466371');
-define('ADMIN_ID', '327046840417517568');
+define('MANIA_ID', '');
+define('ADMIN_ID', '');
+define('BET_CHANNEL_ID', '');
