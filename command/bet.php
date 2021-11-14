@@ -99,8 +99,9 @@ class bet implements command
             return 0;
         }
 
-        if ($content[0] < 1) {
+        if ($content[1] < 1) {
             return 0;
         }
+        return $content[1];
     }
 }
