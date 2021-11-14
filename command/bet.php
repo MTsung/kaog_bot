@@ -14,7 +14,7 @@ class bet implements command
     public function run()
     {
         // 限定這些 channel 才能賭
-        if (!in_array($this->event->channelId(), [explode(',', BET_CHANNEL_ID)])) {
+        if (!in_array($this->event->channelId(), explode(',', BET_CHANNEL_ID))) {
             return false;
         }
 
