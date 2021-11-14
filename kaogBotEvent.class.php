@@ -95,17 +95,17 @@ class kaogBotEvent
         if (!$this->console->conn->Execute('SELECT 1')) {
             $this->console->conn = ADONewConnection("pdo");
             $this->console->conn->connect(
-                'mysql:host='.config::DB_HOST.';dbname='.config::DB_NAME.';charset=utf8mb4',
-                config::DB_USER,
-                config::DB_PASSWORD
+                'mysql:host='.MTsung\config::DB_HOST.';dbname='.MTsung\config::DB_NAME.';charset=utf8mb4',
+                MTsung\config::DB_USER,
+                MTsung\config::DB_PASSWORD
             );
             $this->console->conn->Execute("SET sql_mode = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';");
             $this->console->conn->Execute("SET NAMES utf8mb4;");
             $this->console->conn->Execute("SET CHARACTER_SET_CLIENT=utf8mb4;");
             $this->console->conn->Execute("SET CHARACTER_SET_RESULTS=utf8mb4;");
             $this->console->conn->Execute("SET CHARACTER_SET_CONNECTION=utf8mb4;");
-            $this->console->conn->Execute("SET GLOBAL time_zone = '".config::TIME_ZONE."';");
-            $this->console->conn->Execute("SET time_zone = '".config::TIME_ZONE."';");
+            $this->console->conn->Execute("SET GLOBAL time_zone = '".MTsung\config::TIME_ZONE."';");
+            $this->console->conn->Execute("SET time_zone = '".MTsung\config::TIME_ZONE."';");
             $this->console->conn->SetFetchMode(ADODB_FETCH_ASSOC);
         }
 
