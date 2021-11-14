@@ -107,7 +107,7 @@ class kaogBotEmbeds
                         "inline" => true,
                     ],
                     [
-                        "name" => "​",
+                        "name" => "​!地震",
                         "value" => "​....................................",
                         "inline" => true,
                     ],
