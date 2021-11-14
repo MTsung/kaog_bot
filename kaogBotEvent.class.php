@@ -50,6 +50,7 @@ class kaogBotEvent
         '!ななひら' => 'nanahira',
         '!nanahira' => 'nanahira',
         '!exit' => 'kaogExit',
+        '!地震' => 'earthquake'
     ];
 
     private $contentContain = [
