@@ -107,6 +107,8 @@ class kaogBotEvent
             $this->console->conn->Execute("SET GLOBAL time_zone = '".MTsung\config::TIME_ZONE."';");
             $this->console->conn->Execute("SET time_zone = '".MTsung\config::TIME_ZONE."';");
             $this->console->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+            $this->cococola = new MTsung\center($this->console, 'cococola', '');
+            $this->discordUser = new MTsung\center($this->console, 'discord_user', '');
         }
 
         return $this;
