@@ -43,7 +43,7 @@ class bet implements command
                 'kaog_coin' => ($temp['kaog_coin'] * 0.5),
                 'aaaaaaa' => ((int)$temp['aaaaaaa'] + 1),
             ]);
-            break;
+            return false;
         }
         // 砍半
 

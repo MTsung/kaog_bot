@@ -24,11 +24,17 @@ $client->setLoopInterface($loop);
 
 $client->on('event.MESSAGE_CREATE', function (DiscordClient $client, int $shard, string $event, array $data) use ($console, $discord) {
     if ($data['author']['id'] == $client->getMyInfo()['id']) return;
-    kaogBotEvent::run($console, $discord)
-        ->setData($client, $shard, $event, $data)
-        ->runSql()
-        ->setKaogCoin()
-        ->command();
+    try {
+        kaogBotEvent::run($console, $discord)
+            ->setData($client, $shard, $event, $data)
+            ->runSql()
+            ->setKaogCoin()
+            ->command();
+    } catch (Exception $e) {
+        error_log('kaog 壞掉了');
+        error_log(json_encode($e));
+        exit;
+    }
 });
 
 $client->connect();
