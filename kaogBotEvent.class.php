@@ -33,7 +33,7 @@ class kaogBotEvent
         '!top' => 'top',
         '!bottom' => 'bottom',
         '!aaaaaaa' => 'aaaaaaa',
-        '!kaog_coin' => 'kaog_coin',
+        '!kaog_coin' => 'kaogCoin',
         '!bet' => 'bet',
         '!網路很差' => 'networkIsBad',
         '!酒桶教學' => 'gragasTeaching',
@@ -197,8 +197,8 @@ class kaogBotEvent
     private function r($className)
     {
         if ($className) {
-            require_once(APP_PATH.'cronjob/kaog_bot/command/command.php');
-            require_once(APP_PATH.'cronjob/kaog_bot/command/'.$className.'.php');
+            require_once(KAOG_BOT_PATH.'command/command.php');
+            require_once(KAOG_BOT_PATH.'command/'.$className.'.php');
             (new $className($this, $this->discord))->run();
         }
     }

@@ -13,7 +13,7 @@ class sleep implements command
 
     public function run()
     {
-        $sleep_text = include(APP_PATH.'cronjob/kaog_bot/text/sleep.php');
+        $sleep_text = include(KAOG_BOT_PATH.'text/sleep.php');
         $key = rand(0, count($sleep_text) - 1);
         $this->discord->setMessage($this->event->channelId(), $sleep_text[$key]['message'], $sleep_text[$key]['file']);
     }

@@ -13,6 +13,6 @@ class jeffChan implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channelId(), '', APP_PATH.'cronjob/kaog_bot/file/jeff_chan.jpg');
+        $this->discord->setMessage($this->event->channelId(), '', KAOG_BOT_PATH.'file/jeff_chan.jpg');
     }
 }

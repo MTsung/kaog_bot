@@ -23,7 +23,7 @@ return [
     ],
     [
         'message' => '',
-        'file' => APP_PATH.'cronjob/kaog_bot/file/kaog_Illuminati.png'
+        'file' => KAOG_BOT_PATH.'file/kaog_Illuminati.png'
     ],
     [
         'message' => 'owo',

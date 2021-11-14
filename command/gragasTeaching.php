@@ -13,6 +13,6 @@ class gragasTeaching implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channelId(), '', APP_PATH.'cronjob/kaog_bot/file/酒桶教學.mp4');
+        $this->discord->setMessage($this->event->channelId(), '', KAOG_BOT_PATH.'file/酒桶教學.mp4');
     }
 }

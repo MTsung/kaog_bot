@@ -13,6 +13,6 @@ class aradIsJakads implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channelId(), '', APP_PATH.'cronjob/kaog_bot/file/Arad.jpg');
+        $this->discord->setMessage($this->event->channelId(), '', KAOG_BOT_PATH.'file/Arad.jpg');
     }
 }

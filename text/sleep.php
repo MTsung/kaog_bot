@@ -2,18 +2,18 @@
 return [
     [
         'message' => '',
-        'file' => APP_PATH.'cronjob/kaog_bot/file/jeff_sleep.png'
+        'file' => KAOG_BOT_PATH.'file/jeff_sleep.png'
     ],
     [
         'message' => '',
-        'file' => APP_PATH.'cronjob/kaog_bot/file/www_sleep.png'
+        'file' => KAOG_BOT_PATH.'file/www_sleep.png'
     ],
     [
         'message' => '',
-        'file' => APP_PATH.'cronjob/kaog_bot/file/arad_sleep.png'
+        'file' => KAOG_BOT_PATH.'file/arad_sleep.png'
     ],
     [
         'message' => '',
-        'file' => APP_PATH.'cronjob/kaog_bot/file/jeff_sleep1.jpeg'
+        'file' => KAOG_BOT_PATH.'file/jeff_sleep1.jpeg'
     ],
 ];

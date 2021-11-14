@@ -13,6 +13,6 @@ class networkIsBad implements command
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channelId(), '', APP_PATH.'cronjob/kaog_bot/file/網路很差.mp3');
+        $this->discord->setMessage($this->event->channelId(), '', KAOG_BOT_PATH.'file/網路很差.mp3');
     }
 }
