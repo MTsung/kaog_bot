@@ -57,26 +57,26 @@ class bet implements command
         if ($rand > 50) {
             $move = $useKaogCoin;
             $format = '<@%s> 獲得了 %s 顆敲擊幣，還剩下 %s 顆 <:kaog:498532064337985556>';
-            $kaogCoin = $this->event->number_format_string($useKaogCoin);
+            $kaogCoin = $this->event->numberFormatString($useKaogCoin);
         } else if ($rand < 49) {
             $move = bcmul($useKaogCoin, -1);
             $format = '<@%s> 損失了 %s 顆敲擊幣，還剩下 %s 顆';
-            $kaogCoin = $this->event->number_format_string($useKaogCoin);
+            $kaogCoin = $this->event->numberFormatString($useKaogCoin);
         } else if ($rand == 49) {
             $move = bcmul($useKaogCoin, -5);
             $format = '哭阿 <@%s> 損失了 %s 顆敲擊幣，還剩下 %s 顆 <:sp4:501235091389939713> <:sp4:501235091389939713>';
-            $kaogCoin = $this->event->number_format_string(bcmul($useKaogCoin, 5));
+            $kaogCoin = $this->event->numberFormatString(bcmul($useKaogCoin, 5));
         } else if ($rand == 50) {
             $move = bcmul($useKaogCoin, 20);
             $format = '幹 <@%s> 獲得了 %s 顆敲擊幣，還剩下 %s 顆 <:sp4:501235091389939713> <:sp4:501235091389939713>';
-            $kaogCoin = $this->event->number_format_string(bcmul($useKaogCoin, 20));
+            $kaogCoin = $this->event->numberFormatString(bcmul($useKaogCoin, 20));
         }
 
         $message = sprintf(
             $format,
             $this->event->userId(),
             $kaogCoin,
-            $this->event->number_format_string(bcadd($temp['kaog_coin'], $move))
+            $this->event->numberFormatString(bcadd($temp['kaog_coin'], $move))
         );
         $this->discord->setMessage($this->event->channelId(), $message);
 

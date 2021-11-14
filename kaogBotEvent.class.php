@@ -68,7 +68,6 @@ class kaogBotEvent
 
         $this->cococola = new MTsung\center($this->console, 'cococola', '');
         $this->discordUser = new MTsung\center($this->console, 'discord_user', '');
-
     }
 
     public static function run($console, $discord)
@@ -126,7 +125,7 @@ class kaogBotEvent
 
         $this->kaog_coin_count = $this->kaog_coin_min;
 
-        if ($temp = $this->discord_user->getData('where user_id=?', [$this->userId()])) {
+        if ($temp = $this->discordUser->getData('where user_id=?', [$this->userId()])) {
             $user = $temp[0];
             $last_ts = (int)($user['last_ts'] ?? 0);
             $now = time();
@@ -143,7 +142,7 @@ class kaogBotEvent
             $this->kaog_coin_count = $input['kaog_coin'] = $this->kaog_coin_min;
         }
 
-        $this->discord_user->setData($input);
+        $this->discordUser->setData($input);
 
         return $this;
     }
@@ -196,7 +195,7 @@ class kaogBotEvent
 
     private function r($className)
     {
-        if ($className) {
+        if ($className && is_file(KAOG_BOT_PATH.'command/'.$className.'.php')) {
             require_once(KAOG_BOT_PATH.'command/command.php');
             require_once(KAOG_BOT_PATH.'command/'.$className.'.php');
             (new $className($this, $this->discord))->run();

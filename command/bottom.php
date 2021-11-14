@@ -17,7 +17,7 @@ class bottom implements command
         $message = '敲擊幣窮鬼榜
 ';
         foreach ($top as $key => $value) {
-            $message .= '> '.($key + 1).'. '.$value['member_nick'].' 有 '.$this->event->number_format_string($value['kaog_coin']).' 顆敲擊幣
+            $message .= '> '.($key + 1).'. '.$value['member_nick'].' 有 '.$this->event->numberFormatString($value['kaog_coin']).' 顆敲擊幣
 ';
         }
         $this->discord->setMessage($this->event->channelId(), $message);
