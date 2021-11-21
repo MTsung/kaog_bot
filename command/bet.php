@@ -81,6 +81,7 @@ class bet implements command
         $this->discord->setMessage($this->event->channelId(), $message);
 
         $___ = bcadd($temp['kaog_coin'], $move);
+        $this->setGroup($___);
         $this->event->discordUser()->setData([
             'id' => $temp['id'],
             'kaog_coin' => ((strpos($___, '-') !== false) ? 0 : $___),
@@ -103,5 +104,58 @@ class bet implements command
             return 0;
         }
         return $content[1];
+    }
+
+    private function setGroup($coin)
+    {
+        if ($coin < 1000000){
+            $this->resetGroup();
+        }
+        if ($coin >= 1000000){
+            $this->addMillion();
+        }
+        if ($coin >= 10000000){
+            $this->addTenMillion();
+        }
+        if ($coin >= 100000000){
+            $this->add100Million();
+        }
+    }
+
+    private function resetGroup()
+    {
+        if (in_array('911974359097286688', $this->event->memberGroupIds())) {
+            $this->discord->rmRoles($this->event->guildId(), $this->event->userId(), "911974359097286688");
+        }
+        if (in_array('911974912120455169', $this->event->memberGroupIds())) {
+            $this->discord->rmRoles($this->event->guildId(), $this->event->userId(), "911974912120455169");
+        }
+        if (in_array('911974998611222588', $this->event->memberGroupIds())) {
+            $this->discord->rmRoles($this->event->guildId(), $this->event->userId(), "911974998611222588");
+        }
+    }
+
+    // 百萬
+    private function addMillion()
+    {
+        if (!in_array('911974359097286688', $this->event->memberGroupIds())) {
+            $this->discord->setRoles($this->event->guildId(), $this->event->userId(), "911974359097286688");
+        }
+    }
+
+    // 千萬
+    private function addTenMillion()
+    {
+        if (!in_array('911974912120455169', $this->event->memberGroupIds())) {
+            $this->discord->setRoles($this->event->guildId(), $this->event->userId(), "911974912120455169");
+        }
+    }
+
+    // 億
+    private function add100Million()
+    {
+        if (!in_array('911974998611222588', $this->event->memberGroupIds())) {
+            $this->discord->setRoles($this->event->guildId(), $this->event->userId(), "911974998611222588");
+        }
     }
 }
