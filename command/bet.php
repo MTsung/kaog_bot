@@ -102,54 +102,52 @@ class bet extends baseCommand implements command
 
     private function setGroup($coin)
     {
-        if ($coin < 1000000){
-            $this->resetGroup();
-        }
-        if ($coin >= 1000000){
+        $this->resetGroup();
+        if ($coin >= 1000000) {
             $this->addMillion();
         }
-        if ($coin >= 10000000){
+        if ($coin >= 10000000) {
             $this->addTenMillion();
         }
-        if ($coin >= 100000000){
+        if ($coin >= 100000000) {
             $this->add100Million();
         }
     }
 
     private function resetGroup()
     {
-        if (in_array(slef::GROUP_ID_MILLION, $this->event->memberGroupIds())) {
-            $this->rmRoles(slef::GROUP_ID_MILLION);
+        if (in_array(self::GROUP_ID_MILLION, $this->event->memberGroupIds())) {
+            $this->rmRoles(self::GROUP_ID_MILLION);
         }
-        if (in_array(slef::GROUP_ID_TEN_MILLION, $this->event->memberGroupIds())) {
-            $this->rmRoles(slef::GROUP_ID_TEN_MILLION);
+        if (in_array(self::GROUP_ID_TEN_MILLION, $this->event->memberGroupIds())) {
+            $this->rmRoles(self::GROUP_ID_TEN_MILLION);
         }
-        if (in_array(slef::GROUP_ID__100_MILLION, $this->event->memberGroupIds())) {
-            $this->rmRoles(slef::GROUP_ID__100_MILLION);
+        if (in_array(self::GROUP_ID__100_MILLION, $this->event->memberGroupIds())) {
+            $this->rmRoles(self::GROUP_ID__100_MILLION);
         }
     }
 
     // 百萬
     private function addMillion()
     {
-        if (!in_array(slef::GROUP_ID_MILLION, $this->event->memberGroupIds())) {
-            $this->setRoles(slef::GROUP_ID_MILLION);
+        if (!in_array(self::GROUP_ID_MILLION, $this->event->memberGroupIds())) {
+            $this->setRoles(self::GROUP_ID_MILLION);
         }
     }
 
     // 千萬
     private function addTenMillion()
     {
-        if (!in_array(slef::GROUP_ID_TEN_MILLION, $this->event->memberGroupIds())) {
-            $this->setRoles(slef::GROUP_ID_TEN_MILLION);
+        if (!in_array(self::GROUP_ID_TEN_MILLION, $this->event->memberGroupIds())) {
+            $this->setRoles(self::GROUP_ID_TEN_MILLION);
         }
     }
 
     // 億
     private function add100Million()
     {
-        if (!in_array(slef::GROUP_ID__100_MILLION, $this->event->memberGroupIds())) {
-            $this->setRoles(slef::GROUP_ID__100_MILLION);
+        if (!in_array(self::GROUP_ID__100_MILLION, $this->event->memberGroupIds())) {
+            $this->setRoles(self::GROUP_ID__100_MILLION);
         }
     }
 }
