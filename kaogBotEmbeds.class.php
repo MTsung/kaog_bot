@@ -112,7 +112,7 @@ class kaogBotEmbeds
                         "inline" => true,
                     ],
                     [
-                        "name" => "​",
+                        "name" => "​!打架",
                         "value" => "​....................................",
                         "inline" => true,
                     ],

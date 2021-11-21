@@ -50,7 +50,8 @@ class kaogBotEvent
         '!ななひら' => 'nanahira',
         '!nanahira' => 'nanahira',
         '!exit' => 'kaogExit',
-        '!地震' => 'earthquake'
+        '!地震' => 'earthquake',
+        '​!打架' => 'fight',
     ];
 
     private $contentContain = [
@@ -60,6 +61,7 @@ class kaogBotEvent
     private $channelIdContain = [
         '800271393190051840' => 'seam',
         '800272572339322930' => 'cut',
+        '406747700415954955' => 'checkBirthday'
     ];
 
     private function __construct($console, $discord)
@@ -254,6 +256,11 @@ class kaogBotEvent
     public function discordUser()
     {
         return $this->discordUser;
+    }
+
+    public function memberGroupIds()
+    {
+        return $this->data['member']['roles'];
     }
 
     public function numberFormatString($number, $delimeter = ',')
