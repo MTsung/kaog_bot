@@ -51,7 +51,7 @@ class kaogBotEvent
         '!nanahira' => 'nanahira',
         '!exit' => 'kaogExit',
         '!地震' => 'earthquake',
-        '​!打架' => 'fight',
+        '!打架' => 'fight',
     ];
 
     private $contentContain = [
