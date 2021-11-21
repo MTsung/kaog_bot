@@ -1,14 +1,11 @@
 <?php
 
-class help implements command
+class help extends baseCommand implements command
 {
-    private $discord;
-    private $event;
 
     public function __construct($event, $discord)
     {
-        $this->discord = $discord;
-        $this->event = $event;
+        parent::__construct($event, $discord);
     }
 
     public function run()

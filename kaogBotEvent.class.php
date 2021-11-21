@@ -202,6 +202,7 @@ class kaogBotEvent
     {
         if ($className && is_file(KAOG_BOT_PATH.'command/'.$className.'.php')) {
             require_once(KAOG_BOT_PATH.'command/command.php');
+            require_once(KAOG_BOT_PATH.'command/baseCommand.php');
             require_once(KAOG_BOT_PATH.'command/'.$className.'.php');
             (new $className($this, $this->discord))->run();
         }

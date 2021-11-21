@@ -1,18 +1,15 @@
 <?php
 
-class nijuu implements command
+class nijuu extends baseCommand implements command
 {
-    private $discord;
-    private $event;
 
     public function __construct($event, $discord)
     {
-        $this->discord = $discord;
-        $this->event = $event;
+        parent::__construct($event, $discord);
     }
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channelId(), 'https://youtu.be/S9lVCA2xv40');
+        $this->sendMessage('https://youtu.be/S9lVCA2xv40');
     }
 }

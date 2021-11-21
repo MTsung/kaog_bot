@@ -1,14 +1,14 @@
 <?php
 
-class bet implements command
+class bet extends baseCommand implements command
 {
-    private $discord;
-    private $event;
+    const GROUP_ID_MILLION = '911974359097286688';
+    const GROUP_ID_TEN_MILLION = '911974912120455169';
+    const GROUP_ID__100_MILLION = '911974998611222588';
 
     public function __construct($event, $discord)
     {
-        $this->discord = $discord;
-        $this->event = $event;
+        parent::__construct($event, $discord);
     }
 
     public function run()
@@ -24,20 +24,14 @@ class bet implements command
         }
 
         if ($this->event->kaogCoin() < $useKaogCoin) {
-            $this->discord->setMessage(
-                $this->event->channelId(),
-                '<@'.$this->event->userId().'> 你的敲擊幣不夠 <:sp4:501235091389939713> 立即點擊連結儲值敲擊幣! https://a.mtsung.com/_/support'
-            );
+            $this->sendMessage('<@'.$this->event->userId().'> 你的敲擊幣不夠 <:sp4:501235091389939713> 立即點擊連結儲值敲擊幣! https://a.mtsung.com/_/support');
             return false;
         }
         $temp = $this->event->discordUser()->getData('where user_id=?', [$this->event->userId()])[0];
 
         // 砍半
         if ($this->event->checkAaaaaaa()) {
-            $this->discord->setMessage(
-                $this->event->channelId(), 
-                'AAAAAAA 一待一待一待一待 <@'.$this->event->userId().'> 滑倒了，一半敲擊幣拿去當醫藥費 <:kaogcoin:807899860140556288> <:kaogcoin:807899860140556288> :money_with_wings: :money_with_wings: '
-            );
+            $this->sendMessage('AAAAAAA 一待一待一待一待 <@'.$this->event->userId().'> 滑倒了，一半敲擊幣拿去當醫藥費 <:kaogcoin:807899860140556288> <:kaogcoin:807899860140556288> :money_with_wings: :money_with_wings: ');
             $this->event->discordUser()->setData([
                 'id' => $temp['id'],
                 'kaog_coin' => ($temp['kaog_coin'] * 0.5),
@@ -78,7 +72,7 @@ class bet implements command
             $kaogCoin,
             $this->event->numberFormatString(bcadd($temp['kaog_coin'], $move))
         );
-        $this->discord->setMessage($this->event->channelId(), $message);
+        $this->sendMessage($message);
 
         $___ = bcadd($temp['kaog_coin'], $move);
         $this->setGroup($___);
@@ -124,38 +118,38 @@ class bet implements command
 
     private function resetGroup()
     {
-        if (in_array('911974359097286688', $this->event->memberGroupIds())) {
-            $this->discord->rmRoles($this->event->guildId(), $this->event->userId(), "911974359097286688");
+        if (in_array(slef::GROUP_ID_MILLION, $this->event->memberGroupIds())) {
+            $this->rmRoles(slef::GROUP_ID_MILLION);
         }
-        if (in_array('911974912120455169', $this->event->memberGroupIds())) {
-            $this->discord->rmRoles($this->event->guildId(), $this->event->userId(), "911974912120455169");
+        if (in_array(slef::GROUP_ID_TEN_MILLION, $this->event->memberGroupIds())) {
+            $this->rmRoles(slef::GROUP_ID_TEN_MILLION);
         }
-        if (in_array('911974998611222588', $this->event->memberGroupIds())) {
-            $this->discord->rmRoles($this->event->guildId(), $this->event->userId(), "911974998611222588");
+        if (in_array(slef::GROUP_ID__100_MILLION, $this->event->memberGroupIds())) {
+            $this->rmRoles(slef::GROUP_ID__100_MILLION);
         }
     }
 
     // 百萬
     private function addMillion()
     {
-        if (!in_array('911974359097286688', $this->event->memberGroupIds())) {
-            $this->discord->setRoles($this->event->guildId(), $this->event->userId(), "911974359097286688");
+        if (!in_array(slef::GROUP_ID_MILLION, $this->event->memberGroupIds())) {
+            $this->setRoles(slef::GROUP_ID_MILLION);
         }
     }
 
     // 千萬
     private function addTenMillion()
     {
-        if (!in_array('911974912120455169', $this->event->memberGroupIds())) {
-            $this->discord->setRoles($this->event->guildId(), $this->event->userId(), "911974912120455169");
+        if (!in_array(slef::GROUP_ID_TEN_MILLION, $this->event->memberGroupIds())) {
+            $this->setRoles(slef::GROUP_ID_TEN_MILLION);
         }
     }
 
     // 億
     private function add100Million()
     {
-        if (!in_array('911974998611222588', $this->event->memberGroupIds())) {
-            $this->discord->setRoles($this->event->guildId(), $this->event->userId(), "911974998611222588");
+        if (!in_array(slef::GROUP_ID__100_MILLION, $this->event->memberGroupIds())) {
+            $this->setRoles(slef::GROUP_ID__100_MILLION);
         }
     }
 }

@@ -1,18 +1,15 @@
 <?php
 
-class earthquake implements command
+class earthquake extends baseCommand implements command
 {
-    private $discord;
-    private $event;
 
     public function __construct($event, $discord)
     {
-        $this->discord = $discord;
-        $this->event = $event;
+        parent::__construct($event, $discord);
     }
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channelId(), 'https://youtu.be/zBOt6Y2CcJE');
+        $this->sendMessage('https://youtu.be/zBOt6Y2CcJE');
     }
 }

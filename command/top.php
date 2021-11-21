@@ -1,14 +1,11 @@
 <?php
 
-class top implements command
+class top extends baseCommand implements command
 {
-    private $discord;
-    private $event;
 
     public function __construct($event, $discord)
     {
-        $this->discord = $discord;
-        $this->event = $event;
+        parent::__construct($event, $discord);
     }
 
     public function run()
@@ -20,6 +17,6 @@ class top implements command
             $message .= '> '.($key + 1).'. '.$value['member_nick'].' 有 '.$this->event->numberFormatString($value['kaog_coin']).' 顆敲擊幣
 ';
         }
-        $this->discord->setMessage($this->event->channelId(), $message);
+        $this->sendMessage($message);
     }
 }

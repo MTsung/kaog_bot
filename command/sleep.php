@@ -1,20 +1,17 @@
 <?php
 
-class sleep implements command
+class sleep extends baseCommand implements command
 {
-    private $discord;
-    private $event;
 
     public function __construct($event, $discord)
     {
-        $this->discord = $discord;
-        $this->event = $event;
+        parent::__construct($event, $discord);
     }
 
     public function run()
     {
         $sleep_text = include(KAOG_BOT_PATH.'text/sleep.php');
         $key = rand(0, count($sleep_text) - 1);
-        $this->discord->setMessage($this->event->channelId(), $sleep_text[$key]['message'], $sleep_text[$key]['file']);
+        $this->sendMessage($sleep_text[$key]['message'], $sleep_text[$key]['file']);
     }
 }

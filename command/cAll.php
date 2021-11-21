@@ -1,19 +1,16 @@
 <?php
 
-class cAll implements command
+class cAll extends baseCommand implements command
 {
-    private $discord;
-    private $event;
 
     public function __construct($event, $discord)
     {
-        $this->discord = $discord;
-        $this->event = $event;
+        parent::__construct($event, $discord);
     }
 
     public function run()
     {
         $message = $this->event->cococola()->getData('order by RAND() limit 1')[0]['content'];
-        $this->discord->setMessage($this->event->channelId(), htmlspecialchars_decode($message, ENT_QUOTES));
+        $this->sendMessage(htmlspecialchars_decode($message, ENT_QUOTES));
     }
 }

@@ -1,14 +1,11 @@
 <?php
 
-class aaaaaaa implements command
+class aaaaaaa extends baseCommand implements command
 {
-    private $discord;
-    private $event;
-
+    
     public function __construct($event, $discord)
     {
-        $this->discord = $discord;
-        $this->event = $event;
+        parent::__construct($event, $discord);
     }
 
     public function run()
@@ -20,6 +17,6 @@ class aaaaaaa implements command
             $message .= '> '.($key + 1).'. '.$value['member_nick'].' 滑倒了 '.$this->event->numberFormatString($value['aaaaaaa']).' 次
 ';
         }
-        $this->discord->setMessage($this->event->channelId(), $message);
+        $this->sendMessage($message);
     }
 }

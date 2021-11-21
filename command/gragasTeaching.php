@@ -1,18 +1,15 @@
 <?php
 
-class gragasTeaching implements command
+class gragasTeaching extends baseCommand implements command
 {
-    private $discord;
-    private $event;
 
     public function __construct($event, $discord)
     {
-        $this->discord = $discord;
-        $this->event = $event;
+        parent::__construct($event, $discord);
     }
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channelId(), '', KAOG_BOT_PATH.'file/酒桶教學.mp4');
+        $this->sendMessage('', KAOG_BOT_PATH.'file/酒桶教學.mp4');
     }
 }

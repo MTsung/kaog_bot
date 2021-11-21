@@ -1,18 +1,15 @@
 <?php
 
-class jeffChan implements command
+class jeffChan extends baseCommand implements command
 {
-    private $discord;
-    private $event;
 
     public function __construct($event, $discord)
     {
-        $this->discord = $discord;
-        $this->event = $event;
+        parent::__construct($event, $discord);
     }
 
     public function run()
     {
-        $this->discord->setMessage($this->event->channelId(), '', KAOG_BOT_PATH.'file/jeff_chan.jpg');
+        $this->sendMessage('', KAOG_BOT_PATH.'file/jeff_chan.jpg');
     }
 }
