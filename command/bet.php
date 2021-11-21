@@ -4,7 +4,8 @@ class bet extends baseCommand implements command
 {
     const GROUP_ID_MILLION = '911974359097286688';
     const GROUP_ID_TEN_MILLION = '911974912120455169';
-    const GROUP_ID__100_MILLION = '911974998611222588';
+    const GROUP_ID_100_MILLION = '911974998611222588';
+    const GROUP_ID_DONT_SEE_CHEATER = '911976843442266112';
 
     public function __construct($event, $discord)
     {
@@ -102,7 +103,9 @@ class bet extends baseCommand implements command
 
     private function setGroup($coin)
     {
-        $this->resetGroup();
+        if ($coin < 10000) {
+            $this->resetGroup();
+        }
         if ($coin >= 1000000) {
             $this->addMillion();
         }
@@ -111,6 +114,9 @@ class bet extends baseCommand implements command
         }
         if ($coin >= 100000000) {
             $this->add100Million();
+        }
+        if ($coin >= 9223372036854775807) {
+            $this->addDontSeeCheater();
         }
     }
 
@@ -122,8 +128,11 @@ class bet extends baseCommand implements command
         if (in_array(self::GROUP_ID_TEN_MILLION, $this->event->memberGroupIds())) {
             $this->rmRoles(self::GROUP_ID_TEN_MILLION);
         }
-        if (in_array(self::GROUP_ID__100_MILLION, $this->event->memberGroupIds())) {
-            $this->rmRoles(self::GROUP_ID__100_MILLION);
+        if (in_array(self::GROUP_ID_100_MILLION, $this->event->memberGroupIds())) {
+            $this->rmRoles(self::GROUP_ID_100_MILLION);
+        }
+        if (in_array(self::GROUP_ID_DONT_SEE_CHEATER, $this->event->memberGroupIds())) {
+            $this->rmRoles(self::GROUP_ID_DONT_SEE_CHEATER);
         }
     }
 
@@ -146,8 +155,16 @@ class bet extends baseCommand implements command
     // 億
     private function add100Million()
     {
-        if (!in_array(self::GROUP_ID__100_MILLION, $this->event->memberGroupIds())) {
-            $this->setRoles(self::GROUP_ID__100_MILLION);
+        if (!in_array(self::GROUP_ID_100_MILLION, $this->event->memberGroupIds())) {
+            $this->setRoles(self::GROUP_ID_100_MILLION);
+        }
+    }
+
+    // 不看外掛
+    private function addDontSeeCheater()
+    {
+        if (!in_array(self::GROUP_ID_DONT_SEE_CHEATER, $this->event->memberGroupIds())) {
+            $this->setRoles(self::GROUP_ID_DONT_SEE_CHEATER);
         }
     }
 }
