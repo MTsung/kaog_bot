@@ -103,36 +103,28 @@ class bet extends baseCommand implements command
 
     private function setGroup($coin)
     {
-        if ($coin < 10000) {
-            $this->resetGroup();
-        }
         if ($coin >= 1000000) {
             $this->addMillion();
+        } else {
+            $this->rmMillion();
         }
+
         if ($coin >= 10000000) {
             $this->addTenMillion();
+        } else {
+            $this->rmTenMillion();
         }
+
         if ($coin >= 100000000) {
             $this->add100Million();
+        } else {
+            $this->rm100Million();
         }
+
         if ($coin >= 9223372036854775807) {
             $this->addDontSeeCheater();
-        }
-    }
-
-    private function resetGroup()
-    {
-        if (in_array(self::GROUP_ID_MILLION, $this->event->memberGroupIds())) {
-            $this->rmRoles(self::GROUP_ID_MILLION);
-        }
-        if (in_array(self::GROUP_ID_TEN_MILLION, $this->event->memberGroupIds())) {
-            $this->rmRoles(self::GROUP_ID_TEN_MILLION);
-        }
-        if (in_array(self::GROUP_ID_100_MILLION, $this->event->memberGroupIds())) {
-            $this->rmRoles(self::GROUP_ID_100_MILLION);
-        }
-        if (in_array(self::GROUP_ID_DONT_SEE_CHEATER, $this->event->memberGroupIds())) {
-            $this->rmRoles(self::GROUP_ID_DONT_SEE_CHEATER);
+        } else {
+            $this->rmDontSeeCheater();
         }
     }
 
@@ -165,6 +157,38 @@ class bet extends baseCommand implements command
     {
         if (!in_array(self::GROUP_ID_DONT_SEE_CHEATER, $this->event->memberGroupIds())) {
             $this->setRoles(self::GROUP_ID_DONT_SEE_CHEATER);
+        }
+    }
+
+    // 百萬
+    private function rmMillion()
+    {
+        if (in_array(self::GROUP_ID_MILLION, $this->event->memberGroupIds())) {
+            $this->rmRoles(self::GROUP_ID_MILLION);
+        }
+    }
+
+    // 千萬
+    private function rmTenMillion()
+    {
+        if (in_array(self::GROUP_ID_TEN_MILLION, $this->event->memberGroupIds())) {
+            $this->rmRoles(self::GROUP_ID_TEN_MILLION);
+        }
+    }
+
+    // 億
+    private function rm100Million()
+    {
+        if (in_array(self::GROUP_ID_100_MILLION, $this->event->memberGroupIds())) {
+            $this->rmRoles(self::GROUP_ID_100_MILLION);
+        }
+    }
+
+    // 不看外掛
+    private function rmDontSeeCheater()
+    {
+        if (in_array(self::GROUP_ID_DONT_SEE_CHEATER, $this->event->memberGroupIds())) {
+            $this->rmRoles(self::GROUP_ID_DONT_SEE_CHEATER);
         }
     }
 }
