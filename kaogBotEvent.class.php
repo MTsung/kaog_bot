@@ -37,6 +37,7 @@ class kaogBotEvent
         '!bet' => 'bet',
         '!網路很差' => 'networkIsBad',
         '!酒桶教學' => 'gragasTeaching',
+        '!洗刷屋民' => 'gragasTeaching1',
         '!傑夫失戀' => 'jeffDump',
         '!傑夫醬' => 'jeffChan',
         '!Arad_is_Jakads' => 'aradIsJakads',

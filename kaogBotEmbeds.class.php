@@ -77,6 +77,11 @@ class kaogBotEmbeds
                         "inline" => true,
                     ],
                     [
+                        "name" => "!洗刷屋民",
+                        "value" => "​",
+                        "inline" => true,
+                    ],
+                    [
                         "name" => "!傑夫失戀",
                         "value" => "​",
                         "inline" => true,
