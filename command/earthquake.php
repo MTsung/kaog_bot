@@ -10,6 +10,6 @@ class earthquake extends baseCommand implements command
 
     public function run()
     {
-        $this->sendMessage('https://youtu.be/zBOt6Y2CcJE');
+        $this->sendMessage(rand(0, 1) ? 'https://youtu.be/7gnzFlkmab8' : 'https://youtu.be/zBOt6Y2CcJE');
     }
 }
