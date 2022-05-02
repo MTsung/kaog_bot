@@ -32,10 +32,12 @@ class bet extends baseCommand implements command
 
         // 砍半
         if ($this->event->checkAaaaaaa()) {
-            $this->sendMessage('AAAAAAA 一待一待一待一待 <@'.$this->event->userId().'> 滑倒了，一半敲擊幣拿去當醫藥費 <:kaogcoin:807899860140556288> <:kaogcoin:807899860140556288> :money_with_wings: :money_with_wings: ');
+            $this->sendMessage('AAAAAAA 一待一待一待一待 <@'.$this->event->userId().'> 滑倒了，一半敲擊幣拿去當醫藥費 :money_with_wings: :money_with_wings: ');
+            $___ = $temp['kaog_coin'] * 0.5;
+            $this->setGroup($___);
             $this->event->discordUser()->setData([
                 'id' => $temp['id'],
-                'kaog_coin' => ($temp['kaog_coin'] * 0.5),
+                'kaog_coin' => $___,
                 'aaaaaaa' => ((int)$temp['aaaaaaa'] + 1),
             ]);
             return false;
